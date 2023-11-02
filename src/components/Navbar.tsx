@@ -24,7 +24,7 @@ const _Navbar = styled.div`
   felx-direction: row;
   justify-content: space-between;
   flex-shrink: 0;
-  padding-right: 10px;
+  padding-right: 40px;
 `;
 
 
@@ -65,14 +65,14 @@ const components: {title: string; href: string; description: string}[] = [
       'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
   },
 ];
-const Navbar=() => (
+const Navbar = () => (
   <_Navbar>
     <Image src='/brand_img.png' alt='brand_icon' width={50} height={50} />
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Get Started</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          {/* <NavigationMenuTrigger>Get Started</NavigationMenuTrigger> */}
+          <NavigationMenuContent className='me-4'>
             <ul className='grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
               <li className='row-span-3'>
                 <NavigationMenuLink asChild>
@@ -103,7 +103,7 @@ const Navbar=() => (
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Projects</NavigationMenuTrigger>
+          {/* <NavigationMenuTrigger>Projects</NavigationMenuTrigger> */}
           <NavigationMenuContent>
             <ul className='grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] '>
               {components.map((component) => (
@@ -118,14 +118,22 @@ const Navbar=() => (
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href='https://moikaslookout.com' legacyBehavior passHref>
+          <Link
+            target='new'
+            href='https://moikaslookout.com'
+            legacyBehavior
+            passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Merch
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href='https://blog.moikaslookout.com' legacyBehavior passHref>
+          <Link
+            target='new'
+            href='https://blog.moikaslookout.com'
+            legacyBehavior
+            passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Newsletter
             </NavigationMenuLink>

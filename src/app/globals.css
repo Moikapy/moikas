@@ -184,3 +184,16 @@ a {
     color-scheme: dark;
   }
 }
+
+.me-4 {
+  margin-right: 2rem !important;
+}
+
+.me-5 {
+  margin-right: 3rem !important;
+}
+
+nav div:nth-child(2) {
+ left: auto;
+ right: 1px;
+}

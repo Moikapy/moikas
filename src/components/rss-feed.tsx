@@ -3,7 +3,8 @@
 
 import React, {useState, useEffect, useMemo} from 'react';
 import Container from './container';
-import styles from '../styles/RSSFeed.module.css'; // Adjust the path based on your directory structure
+import * as styles from '../styles/RSSFeed.module.css'; // Adjust the path based on your directory structure
+import { truncate } from '@/lib/utils';
 
 interface FeedItem {
   title: string;
@@ -66,7 +67,10 @@ const RSSFeed: React.FC<{
       <p>{title}</p>
       {feedItems
         .flat()
-        .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime())
+        .sort(
+          (a, b) =>
+            new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
+        )
         .map((item, idx) => (
           <div key={idx} className={styles.feedContainer}>
             <div className={styles.feedItem}>
@@ -75,7 +79,9 @@ const RSSFeed: React.FC<{
                   {item.title}
                 </a>
               </h2>
-              <p className={styles.feedSnippet}>{item.contentSnippet}</p>
+              <p className={styles.feedSnippet}>
+                {truncate(item.contentSnippet||'',280)}
+              </p>
               <p className={styles.feedSnippet}>{item.pubDate}</p>
             </div>
           </div>

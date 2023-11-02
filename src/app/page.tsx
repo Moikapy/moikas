@@ -68,15 +68,15 @@ const Brand_name = styled.h1`
 const Button = styled.button`
   margin: 10px;
   padding: 8px 16px;
-  border: none;
-  background-color: #0070f3;
-  color: #fff;
+  border: 1px solid #000;
+  background-color: #fff;
+  color: #000;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: #eee;
   }
 `;
 const Iframe = styled.iframe`
@@ -119,6 +119,7 @@ export default function Home() {
               urls={[
                 'https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml',
                 'https://www.youtube.com/feeds/videos.xml?channel_id=UCIjgVUuzx_H0ZrUK-6J_QiQ',
+                'https://www.etsy.com/shop/moikaslookout/rss',
               ]}
               onComplete={() => setLoading(true)}
             />
