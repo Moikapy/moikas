@@ -23,6 +23,18 @@ export default function RootLayout({
      
 
       <body className={inter.className}>{children}</body>
+
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5408519350906957"
+     crossOrigin="anonymous"></script>
+
+    <ins className="adsbygoogle"
+        data-ad-client="ca-pub-5408519350906957"
+        data-ad-slot="1130140494"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
     </html>
   )
 }
