@@ -3,7 +3,7 @@
 
 import React, {useState, useEffect, useMemo} from 'react';
 import Container from './container';
-import * as styles from '../styles/RSSFeed.module.css'; // Adjust the path based on your directory structure
+import styles from '../styles/RSSFeed.module.css'; // Adjust the path based on your directory structure
 import { truncate } from '@/lib/utils';
 
 interface FeedItem {
