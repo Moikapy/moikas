@@ -7,7 +7,7 @@ import styles from './page.module.css';
 import TwitchStream from '@/components/TwitchStream';
 import Navbar from '@/components/Navbar';
 const sizes = {
-  none: '0px',
+  root: '0px',
   mobileS: '320px',
   mobileM: '375px',
   mobileL: '425px',
@@ -17,7 +17,7 @@ const sizes = {
   desktop: '2560px',
 };
 export const devices = {
-  none: `(min-width: ${sizes.none})`,
+  root: `(min-width: ${sizes.root})`,
   mobileS: `(min-width: ${sizes.mobileS})`,
   mobileM: `(min-width: ${sizes.mobileM})`,
   mobileL: `(min-width: ${sizes.mobileL})`,
@@ -47,7 +47,16 @@ const Header = styled.div`
   min-width: 100%;
   flex-direction: column;
   align-items: center;
-  margin-top: 250px;
+
+  @media ${devices.root} {
+
+    margin-top: 150px;
+    margin-bottom: 150px;
+  }
+  @media ${devices.laptop} {
+
+    margin-top: 250px;
+  }
 `;
 
 const Button_Group = styled.div`
@@ -80,7 +89,7 @@ const Button = styled.button`
   }
 `;
 const Iframe = styled.iframe`
-  @media ${devices.none} {
+  @media ${devices.root} {
     display: none;
   }
   @media ${devices.tablet} {
