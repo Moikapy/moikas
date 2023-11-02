@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/navigation-menu';
 import styled from 'styled-components';
 import Link from 'next/link';
-const Navbar = styled.div`
+const _Navbar = styled.div`
   border: 1px solid #000;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -27,30 +27,7 @@ const Navbar = styled.div`
   padding-right: 10px;
 `;
 
-const ListItem = React.forwardRef<
-  React.ElementRef<'a'>,
-  React.ComponentPropsWithoutRef<'a'>
->(({className, title, children, ...props}, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-            className
-          )}
-          {...props}>
-          <div className='text-sm font-medium leading-none'>{title}</div>
-          <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = 'ListItem';
+
 const components: {title: string; href: string; description: string}[] = [
   {
     title: 'Alert Dialog',
@@ -88,9 +65,8 @@ const components: {title: string; href: string; description: string}[] = [
       'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
   },
 ];
-
-export default () => (
-  <Navbar>
+const Navbar=() => (
+  <_Navbar>
     <Image src='/brand_img.png' alt='brand_icon' width={50} height={50} />
     <NavigationMenu>
       <NavigationMenuList>
@@ -157,5 +133,30 @@ export default () => (
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  </Navbar>
-);
+  </_Navbar>
+);Navbar;
+export default Navbar;
+const ListItem = React.forwardRef<
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'>
+>(({className, title, children, ...props}, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            className
+          )}
+          {...props}>
+          <div className='text-sm font-medium leading-none'>{title}</div>
+          <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = 'ListItem';

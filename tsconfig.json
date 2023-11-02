@@ -31,6 +31,8 @@
     "src/**/*.tsx"
   ],
   "exclude": [
+
+    ".next",
     "node_modules",
     "**/*.spec.ts",
     "**/*.spec.tsx",
