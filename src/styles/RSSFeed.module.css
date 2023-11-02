@@ -1,0 +1,61 @@
+/* styles/RSSFeed.module.css */
+.feed {
+     font-family: 'Montserrat', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100%;
+    background-color: #f6f6ef; /* Light background similar to Hacker News */
+}
+.feedContainer {
+     font-family: 'Montserrat', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    
+    background-color: #f6f6ef; /* Light background similar to Hacker News */
+}
+
+.feedItem {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 0;
+}
+
+.feedItem:last-child {
+    border-bottom: none;
+}
+
+.feedTitle {
+    font-size: 18px;
+    margin: 0;
+    color: black; /* Your accent color */
+}
+
+.feedTitle a {
+    text-decoration: none;
+    color: #ColorBlackflame; /* Your accent color */
+  transition: color 0.3s;
+}
+
+.feedTitle a:hover {
+    color: #333; /* Darker color on hover */
+}
+
+.feedSnippet {
+    font-size: 14px;
+    color: #888; /* Grayish text for snippet */
+  margin-top: 8px;
+}
+
+/* Scrollbar styling */
+.feedContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+.feedContainer::-webkit-scrollbar-thumb {
+    background-color: #ColorBlackflame; /* Your accent color */
+  border-radius: 4px;
+}
+
+.feedContainer::-webkit-scrollbar-track {
+    background-color: #f6f6ef;
+}
