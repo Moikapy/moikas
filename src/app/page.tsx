@@ -1,10 +1,11 @@
 'use client';
 import Image from 'next/image';
 import RSSFeed from '@/components/rss-feed';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import styled from 'styled-components';
 import styles from './page.module.css';
 import TwitchStream from '@/components/TwitchStream';
+import ReactGA from 'react-ga4';
 import Navbar from '@/components/Navbar';
 const sizes = {
   root: '0px',
@@ -49,12 +50,10 @@ const Header = styled.div`
   align-items: center;
 
   @media ${devices.root} {
-
     margin-top: 150px;
     margin-bottom: 150px;
   }
   @media ${devices.laptop} {
-
     margin-top: 250px;
   }
 `;
@@ -103,7 +102,9 @@ const Iframe = styled.iframe`
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [showRSSFeed, setShowRSSFeed] = useState<boolean>(true);
-
+  useMemo(() => {
+    ReactGA.initialize(process.env.GA_TRACKING_ID||'');
+  }, [process.env.GA_TRACKING_ID]);
   return (
     <Main>
       <Navbar />

@@ -4,6 +4,7 @@ const nextConfig = {
     TWITCH_CHANNEL_NAME: process.env.TWITCH_CHANNEL_NAME,
     TWITCH_CLIENT_ID: process.env.TWITCH_CLIENT_ID,
     TWITCH_CLIENT_SECRET: process.env.TWITCH_CLIENT_SECRET,
+    GA_TRACKING_ID:process.env.GA_TRACKING_ID,
   },
 };
 
