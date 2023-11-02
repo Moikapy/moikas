@@ -103,7 +103,13 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [showRSSFeed, setShowRSSFeed] = useState<boolean>(true);
   useMemo(() => {
-    ReactGA.initialize(process.env.GA_TRACKING_ID||'');
+    ReactGA.initialize(process.env.GA_TRACKING_ID || '');
+    // Send pageview with a custom path
+    ReactGA.send({
+      hitType: 'pageview',
+      page: '/',
+      title: 'Moikas',
+    });
   }, [process.env.GA_TRACKING_ID]);
   return (
     <Main>
