@@ -15,6 +15,7 @@ const StreamContainer = styled.div`
   width: 100%;
   height:100vw;
   max-height: 800px;
+  margin-bottom: 4px;
 `;
 
 interface Props {
