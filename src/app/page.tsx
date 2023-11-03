@@ -1,21 +1,21 @@
-'use client';
-import Image from 'next/image';
-import RSSFeed from '@/components/rss-feed';
-import {useMemo, useState} from 'react';
-import styled from 'styled-components';
-import styles from './page.module.css';
-import TwitchStream from '@/components/TwitchStream';
-import ReactGA from 'react-ga4';
-import Navbar from '@/components/Navbar';
+"use client";
+import Image from "next/image";
+import RSSFeed from "@/components/rss-feed";
+import { useMemo, useState } from "react";
+import styled from "styled-components";
+import styles from "./page.module.css";
+import TwitchStream from "@/components/TwitchStream";
+import ReactGA from "react-ga4";
+import Navbar from "@/components/Navbar";
 const sizes = {
-  root: '0px',
-  mobileS: '320px',
-  mobileM: '375px',
-  mobileL: '425px',
-  tablet: '768px',
-  laptop: '1024px',
-  laptopL: '1440px',
-  desktop: '2560px',
+  root: "0px",
+  mobileS: "320px",
+  mobileM: "375px",
+  mobileL: "425px",
+  tablet: "768px",
+  laptop: "1024px",
+  laptopL: "1440px",
+  desktop: "2560px",
 };
 export const devices = {
   root: `(min-width: ${sizes.root})`,
@@ -39,6 +39,7 @@ const Container = styled.div`
   display: flex;
   justify-content: start;
   flex-direction: column;
+  width:100%
 `;
 
 const Header = styled.div`
@@ -102,13 +103,14 @@ const Iframe = styled.iframe`
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [showRSSFeed, setShowRSSFeed] = useState<boolean>(true);
+  const [showHeader, setShowHeader] = useState<boolean>(true);
   useMemo(() => {
-    ReactGA.initialize(process.env.GA_TRACKING_ID || '');
+    ReactGA.initialize(process.env.GA_TRACKING_ID || "");
     // Send pageview with a custom path
     ReactGA.send({
-      hitType: 'pageview',
-      page: '/',
-      title: 'Moikas',
+      hitType: "pageview",
+      page: "/",
+      title: "Moikas",
     });
   }, [process.env.GA_TRACKING_ID]);
   return (
@@ -116,26 +118,35 @@ export default function Home() {
       <Navbar />
       {loading && (
         <Container>
-          <Header>
-            <Brand_name>MOIKAS</Brand_name>
-            <Iframe
-              src='https://embeds.beehiiv.com/da38b479-5278-4c4f-92da-65fd877960bf?slim=true'
-              data-test-id='beehiiv-embed'
-              height='52'
-              width='500'
-              frameBorder='0'
-              scrolling='no'></Iframe>
-            <Button onClick={() => setShowRSSFeed(!showRSSFeed)}>Toggle</Button>
-          </Header>
-          {/* <TwitchStream /> */}
+          {showHeader && (
+            <Header>
+              {" "}
+              <Brand_name>MOIKAS</Brand_name>
+            </Header>
+          )}
+          {/* <Button onClick={() => setShowRSSFeed(!showRSSFeed)}>Toggle</Button> */}
+
+          <TwitchStream
+            onComplete={(e: boolean): void => {
+              setShowHeader(!e);
+            }}
+          />
+          <Iframe
+            src="https://embeds.beehiiv.com/da38b479-5278-4c4f-92da-65fd877960bf?slim=true"
+            data-test-id="beehiiv-embed"
+            height="52"
+            width="500"
+            frameBorder="0"
+            scrolling="no"
+          ></Iframe>
           {/* Conditional rendering based on showRSSFeed state */}
           {showRSSFeed && (
             <RSSFeed
-              title='Latest'
+              title="Latest"
               urls={[
-                'https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml',
-                'https://www.youtube.com/feeds/videos.xml?channel_id=UCIjgVUuzx_H0ZrUK-6J_QiQ',
-                'https://www.etsy.com/shop/moikaslookout/rss',
+                "https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml",
+                "https://www.youtube.com/feeds/videos.xml?channel_id=UCIjgVUuzx_H0ZrUK-6J_QiQ",
+                "https://www.etsy.com/shop/moikaslookout/rss",
               ]}
               onComplete={() => setLoading(true)}
             />
