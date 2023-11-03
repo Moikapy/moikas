@@ -1,11 +1,11 @@
-'use client';
+"use client";
 // src/components/RSSFeed.tsx
 
-import React, {useState, useEffect, useMemo} from 'react';
-import Container from './container';
-import styles from '../styles/RSSFeed.module.css'; // Adjust the path based on your directory structure
-import { truncate } from '@/lib/utils';
-
+import React, { useState, useEffect, useMemo } from "react";
+import Container from "./container";
+import styles from "../styles/RSSFeed.module.css"; // Adjust the path based on your directory structure
+import { truncate } from "@/lib/utils";
+import ReactGA from "react-ga4";
 interface FeedItem {
   title: string;
   link: string;
@@ -17,11 +17,11 @@ const RSSFeed: React.FC<{
   title: string;
   urls: string[];
   onComplete?: Function;
-}> = ({title, urls, onComplete = () => {}}) => {
+}> = ({ title, urls, onComplete = () => {} }) => {
   const [feedItems, setFeedItems] = useState<FeedItem[][]>([]);
   const [loading, setLoading] = useState(true);
   const [copyrights, setCopyrights] = useState<string[]>([]);
-
+  ReactGA.initialize(process.env.GA_TRACKING_ID || "");
   useMemo(() => {
     const fetchRSSFeed = async (url: string) => {
       try {
@@ -29,7 +29,7 @@ const RSSFeed: React.FC<{
         const data = await response.json();
         return data;
       } catch (error) {
-        console.error('Error fetching RSS feed:', error);
+        console.error("Error fetching RSS feed:", error);
         return null;
       }
     };
@@ -72,23 +72,35 @@ const RSSFeed: React.FC<{
             new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
         )
         .map((item, idx) => (
-          <div key={idx} className={styles.feedContainer}>
+          <div
+            key={idx}
+            className={styles.feedContainer}
+            onClick={() => {
+              // Send a custom event
+
+              ReactGA.event({
+                category: "rss_feed",
+                action: "clicked",
+                label: item.title,
+              });
+            }}
+          >
             <div className={styles.feedItem}>
               <h2 className={styles.feedTitle}>
-                <a href={item.link} target='_blank' rel='noopener noreferrer'>
+                <a href={item.link} target="_blank" rel="noopener noreferrer">
                   {item.title}
                 </a>
               </h2>
               <p className={styles.feedSnippet}>
-                {truncate(item.contentSnippet||'',280)}
+                {truncate(item.contentSnippet || "", 280)}
               </p>
               <p className={styles.feedSnippet}>{item.pubDate}</p>
             </div>
           </div>
-        ))}{' '}
+        ))}{" "}
       <hr />
       <br />
-      {copyrights[0] || ''}
+      {copyrights[0] || ""}
     </div>
   );
 };

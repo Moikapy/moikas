@@ -39,7 +39,7 @@ const Container = styled.div`
   display: flex;
   justify-content: start;
   flex-direction: column;
-  width:100%
+  width: 100%;
 `;
 
 const Header = styled.div`
