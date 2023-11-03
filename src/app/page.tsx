@@ -67,7 +67,7 @@ const Button_Group = styled.div`
 `;
 const Brand_name = styled.h1`
   font-family: Montserrat;
-
+  text-decoration: underline;
   font-weight: 400;
   line-height: 117px;
   letter-spacing: 0em;
@@ -77,6 +77,17 @@ const Brand_name = styled.h1`
   }
   @media ${devices.tablet} {
     font-size: 96px;
+  }
+`;
+const CTA = styled.p`
+  font-family: Montserrat;
+
+  font-weight: 400;
+  letter-spacing: 0em;
+  text-align: center;
+  max-width:700px;
+  @media ${devices.root} {
+    font-size: 24px;
   }
 `;
 
@@ -128,6 +139,10 @@ export default function Home() {
             <Header>
               {" "}
               <Brand_name>MOIKAS</Brand_name>
+              <CTA>
+                Explore the Edge of AI! Gain the latest insights and join the
+                forefront of tech pioneers. Lead the conversation today!
+              </CTA>
             </Header>
           )}
           {/* <Button onClick={() => setShowRSSFeed(!showRSSFeed)}>Toggle</Button> */}
