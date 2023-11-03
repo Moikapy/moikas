@@ -67,11 +67,17 @@ const Button_Group = styled.div`
 `;
 const Brand_name = styled.h1`
   font-family: Montserrat;
-  font-size: 96px;
+
   font-weight: 400;
   line-height: 117px;
   letter-spacing: 0em;
   text-align: left;
+  @media ${devices.root} {
+    font-size: 48px;
+  }
+  @media ${devices.tablet} {
+    font-size: 96px;
+  }
 `;
 
 const Button = styled.button`
