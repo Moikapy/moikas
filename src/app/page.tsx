@@ -141,8 +141,7 @@ export default function Home() {
               {' '}
               <Brand_name>MOIKAS</Brand_name>
               <CTA>
-                Gain the latest insights and join the forefront of tech
-                pioneers.
+                Gain the latest insights and discoveries in AI.
               </CTA>
             </Header>
           )}
