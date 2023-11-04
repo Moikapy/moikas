@@ -137,10 +137,11 @@ export default function Home() {
         <Container>
           {showHeader && (
             <Header>
-              {" "}
+              {' '}
               <Brand_name>MOIKAS</Brand_name>
               <CTA>
-                c
+                Explore the Edge of AI! Gain the latest insights and join the
+                forefront of tech pioneers. Lead the conversation today!
               </CTA>
             </Header>
           )}
@@ -152,20 +153,19 @@ export default function Home() {
             }}
           />
           <Iframe
-            src="https://embeds.beehiiv.com/da38b479-5278-4c4f-92da-65fd877960bf?slim=true"
-            data-test-id="beehiiv-embed"
-            height="52"
-            width="500"
-          ></Iframe>
+            src='https://embeds.beehiiv.com/da38b479-5278-4c4f-92da-65fd877960bf?slim=true'
+            data-test-id='beehiiv-embed'
+            height='52'
+            width='500'></Iframe>
           {/* Conditional rendering based on showRSSFeed state */}
           {showRSSFeed && (
             <RSSFeed
-            isCard
-              title="Latest"
+              isCard
+              title='Latest'
               urls={[
-                "https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml",
-                "https://www.youtube.com/feeds/videos.xml?channel_id=UCIjgVUuzx_H0ZrUK-6J_QiQ",
-                "https://www.etsy.com/shop/moikaslookout/rss",
+                'https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml',
+                'https://www.youtube.com/feeds/videos.xml?channel_id=UCIjgVUuzx_H0ZrUK-6J_QiQ',
+                'https://www.etsy.com/shop/moikaslookout/rss',
               ]}
               onComplete={() => setLoading(true)}
             />

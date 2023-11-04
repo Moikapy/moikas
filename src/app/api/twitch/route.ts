@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     accessToken = tokenData.access_token;
   }
   const response = await fetch(
-    `https://api.twitch.tv/helix/streams?user_login=${process.env.TWITCH_CHANNEL_NAME}&type=live`,
+    `https://api.twitch.tv/helix/streams?user_login=${'moikapy'}&type=live`,
     {
       headers: {
         'Client-ID': process.env.TWITCH_CLIENT_ID || '',
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     }
   );
   const data = await response.json();
-  // console.log(data)
+  console.log(data)
   try {
     return new Response(JSON.stringify(data), {status: 200});
   } catch (error: any) {

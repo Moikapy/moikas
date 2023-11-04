@@ -154,10 +154,10 @@ function RSS_List_Item({item}: {item: any}) {
 }
 function RSS_Card_Item({item}: {item: any}) {
   const Card = styled.div`
-  position: relative;
-  text-align: left;
+    position: relative;
+    text-align: left;
     flex-shrink: 0;
-    margin: 0.5rem;
+    margin: 0.5rem 0.5rem 3rem;
     padding: 0 20px 20px;
     border-radius: 10px;
     background-color: #fff;
@@ -192,7 +192,7 @@ function RSS_Card_Item({item}: {item: any}) {
     border-radius: 0 0 0 10px;
     background-color: #000;
     color: #fff;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
   `;
@@ -204,7 +204,7 @@ function RSS_Card_Item({item}: {item: any}) {
     border-radius: 0 0 10px 0;
     background-color: #000;
     color: #fff;
-    font-size: 12px;
+    font-size: 8px;
     font-weight: 600;
     text-transform: uppercase;
   `;
