@@ -81,7 +81,7 @@ const Brand_name = styled.h1`
 `;
 const CTA = styled.p`
   font-family: Montserrat;
-
+  padding: 0 15px;
   font-weight: 400;
   letter-spacing: 0em;
   text-align: center;
@@ -107,13 +107,14 @@ const Button = styled.button`
 `;
 const Iframe = styled.iframe`
   @media ${devices.root} {
-    display: none;
+    margin: 0 auto;
+    max-width: 325px;
   }
   @media ${devices.tablet} {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
+    max-width: 500px;
   }
 `;
 
@@ -140,12 +141,11 @@ export default function Home() {
               {' '}
               <Brand_name>MOIKAS</Brand_name>
               <CTA>
-                Explore the Edge of AI! Gain the latest insights and join the
-                forefront of tech pioneers. Lead the conversation today!
+                Gain the latest insights and join the forefront of tech
+                pioneers.
               </CTA>
             </Header>
           )}
-          {/* <Button onClick={() => setShowRSSFeed(!showRSSFeed)}>Toggle</Button> */}
 
           <TwitchStream
             onComplete={(e: boolean): void => {
