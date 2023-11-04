@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import RSSFeed from "@/components/rss-feed";
+import RSSFeed from "@/components/rss_feed";
 import { useMemo, useState } from "react";
 import styled from "styled-components";
 import styles from "./page.module.css";
@@ -85,7 +85,7 @@ const CTA = styled.p`
   font-weight: 400;
   letter-spacing: 0em;
   text-align: center;
-  max-width:700px;
+  max-width: 700px;
   @media ${devices.root} {
     font-size: 24px;
   }
@@ -140,8 +140,7 @@ export default function Home() {
               {" "}
               <Brand_name>MOIKAS</Brand_name>
               <CTA>
-                Explore the Edge of AI! Gain the latest insights and join the
-                forefront of tech pioneers. Lead the conversation today!
+                c
               </CTA>
             </Header>
           )}
@@ -157,12 +156,11 @@ export default function Home() {
             data-test-id="beehiiv-embed"
             height="52"
             width="500"
-            frameBorder="0"
-            scrolling="no"
           ></Iframe>
           {/* Conditional rendering based on showRSSFeed state */}
           {showRSSFeed && (
             <RSSFeed
+            isCard
               title="Latest"
               urls={[
                 "https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml",
