@@ -8,6 +8,7 @@ import {truncate} from '@/lib/utils';
 import ReactGA from 'react-ga4';
 import styled from 'styled-components';
 import {DateTime} from 'luxon';
+import Link from 'next/link';
 import H from '../common/H';
 interface FeedItem {
   title: string;
@@ -153,6 +154,8 @@ function RSS_List_Item({item}: {item: any}) {
   );
 }
 function RSS_Card_Item({item}: {item: any}) {
+
+
   const Card = styled.div`
     position: relative;
     text-align: left;
@@ -221,34 +224,34 @@ function RSS_Card_Item({item}: {item: any}) {
           label: item.title,
         });
       }}>
-      <Tag>
-        {item.creator == 'Moikapy'
-          ? 'Blog'
-          : item.author == 'Moikapy TV'
-          ? 'Video'
-          : 'Store'}
-      </Tag>
-      <Card_Content className={styles.feedItem}>
-        <Text_section>
-          <h2 className={`${styles.feedTitle} text-truncate`}>
-            <a href={item.link} target='_blank' rel='noopener noreferrer'>
+      <Link href={item.link} prefetch={true} target='_blank'>
+        <Tag>
+          {item.creator == 'Moikapy'
+            ? 'Blog'
+            : item.author == 'Moikapy TV'
+            ? 'Video'
+            : 'Store'}
+        </Tag>
+        <Card_Content className={styles.feedItem}>
+          <Text_section>
+            <h2 className={`${styles.feedTitle} text-truncate`}>
               {item.title}
-            </a>
-          </h2>
-          <p className={`${styles.feedSnippet} text-truncate`}>
-            {truncate(item.contentSnippet || '', 140)}
-          </p>
-        </Text_section>
-        <Date className={styles.feedSnippet}>
-          {item.author !== 'Moikapy TV'
-            ? DateTime.fromRFC2822(
-                item.pubDate || item.published || ''
-              ).toFormat('FF ZZ')
-            : DateTime.fromISO(item.pubDate || item.published || '').toFormat(
-                'FF ZZ'
-              )}
-        </Date>
-      </Card_Content>
+            </h2>
+            <p className={`${styles.feedSnippet} text-truncate`}>
+              {truncate(item.contentSnippet || '', 140)}
+            </p>
+          </Text_section>
+          <Date className={styles.feedSnippet}>
+            {item.author !== 'Moikapy TV'
+              ? DateTime.fromRFC2822(
+                  item.pubDate || item.published || ''
+                ).toFormat('FF ZZ')
+              : DateTime.fromISO(item.pubDate || item.published || '').toFormat(
+                  'FF ZZ'
+                )}
+          </Date>
+        </Card_Content>
+      </Link>
     </Card>
   );
 }
