@@ -177,7 +177,10 @@ a {
     color-scheme: dark;
   }
 }
+.NavigationMenuContent svg:nth-child(2){
+  display: none !important;
 
+}
 nav div:nth-child(2) {
   left: auto;
   right: 1px;

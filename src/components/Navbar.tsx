@@ -71,43 +71,108 @@ const Navbar = () => {
 
   return (
     <_Navbar>
-      <Image src='/brand_img.png' alt='brand_icon' width={50} height={50} />
+      <Link target='_self' href='/' passHref>
+        <Image src='/brand_img.png' alt='brand_icon' width={50} height={50} />
+      </Link>
+
       <NavigationMenu>
         <NavigationMenuList>
-          <NavigationMenuItem>
-            {/* <NavigationMenuTrigger>Get Started</NavigationMenuTrigger> */}
+          <NavigationMenuItem className='NavigationMenuContent'>
+            <NavigationMenuTrigger className='NavigationMenuContent'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                width='16'
+                height='16'
+                fill='currentColor'
+                className='bi bi-three-dots-vertical'
+                viewBox='0 0 16 16'>
+                <path d='M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z' />
+              </svg>
+            </NavigationMenuTrigger>
+            {/* // lower menu */}
             <NavigationMenuContent className='me-4'>
               <ul className='grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
                 <li className='row-span-3'>
                   <NavigationMenuLink asChild>
                     <a
                       className='flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md'
-                      href='/'>
+                      href='/about'>
                       <div className='h-6 w-6' />
                       <div className='mb-2 mt-4 text-lg font-medium'>
-                        shadcn/ui
+                        About Me
                       </div>
                       <p className='text-sm leading-tight text-muted-foreground'>
-                        Beautifully designed components built with Radix UI and
-                        Tailwind CSS.
+                        A brief introduction page about me.
                       </p>
                     </a>
                   </NavigationMenuLink>
                 </li>
-                <ListItem href='/docs' title='Introduction'>
-                  Re-usable components built using Radix UI and Tailwind CSS.
-                </ListItem>
-                <ListItem href='/docs/installation' title='Installation'>
-                  How to install dependencies and structure your app.
-                </ListItem>
-                <ListItem href='/docs/primitives/typography' title='Typography'>
-                  Styles for headings, paragraphs, lists...etc
-                </ListItem>
+                <NavigationMenuItem
+                  onClick={() => {
+                    // Send a custom event
+
+                    ReactGA.event({
+                      category: 'navigation',
+                      action: 'clicked',
+                      label: 'Shop',
+                    });
+                  }}
+                  asChild>
+                  <Link target='_blank' href='https://shop.moikas.com' passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}>
+                      Shop
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+                <NavigationMenuItem
+                  onClick={() => {
+                    // Send a custom event
+
+                    ReactGA.event({
+                      category: 'navigation',
+                      action: 'clicked',
+                      label: 'digital',
+                    });
+                  }}
+                  asChild>
+                  <Link
+                    target='_blank'
+                    href='https://moikapylookout.gumroad.com/'
+                    passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}>
+                      Digital Products
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem
+                  onClick={() => {
+                    // Send a custom event
+
+                    ReactGA.event({
+                      category: 'navigation',
+                      action: 'clicked',
+                      label: 'Blog',
+                    });
+                  }}
+                  asChild>
+                  <Link
+                    target='new'
+                    href='https://blog.moikaslookout.com'
+                    passHref>
+                    <NavigationMenuLink
+                      className={navigationMenuTriggerStyle()}>
+                      Newsletter
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
-          <NavigationMenuItem>
-            {/* <NavigationMenuTrigger>Projects</NavigationMenuTrigger> */}
+          {/* <NavigationMenuItem>
+            <NavigationMenuTrigger>Projects</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className='grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] '>
                 {components.map((component) => (
@@ -120,58 +185,7 @@ const Navbar = () => {
                 ))}
               </ul>
             </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem
-            onClick={() => {
-              // Send a custom event
-
-              ReactGA.event({
-                category: 'navigation',
-                action: 'clicked',
-                label: 'digital',
-              });
-            }}>
-            <Link
-              target='_blank'
-              href='https://moikapylookout.gumroad.com/'
-              passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Digital
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem
-            onClick={() => {
-              // Send a custom event
-
-              ReactGA.event({
-                category: 'navigation',
-                action: 'clicked',
-                label: 'Merch',
-              });
-            }}>
-            <Link target='new' href='https://moikaslookout.com' passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Merch
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem
-            onClick={() => {
-              // Send a custom event
-
-              ReactGA.event({
-                category: 'navigation',
-                action: 'clicked',
-                label: 'Blog',
-              });
-            }}>
-            <Link target='new' href='https://blog.moikaslookout.com' passHref>
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                Newsletter
-              </NavigationMenuLink>
-            </Link>
-          </NavigationMenuItem>
+          </NavigationMenuItem> */}
         </NavigationMenuList>
       </NavigationMenu>
     </_Navbar>

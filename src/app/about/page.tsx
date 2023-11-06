@@ -35,105 +35,130 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
 `;
-const Container = styled.div`
-  display: flex;
-  justify-content: start;
-  flex-direction: column;
-  width: 100%;
-`;
 
-const Header = styled.div`
+// Styled components
+const AboutSectionContainer = styled.div`
   display: flex;
-  max-width: 800px;
-  width: 100vw;
-  min-width: 100%;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-
-  @media ${devices.root} {
-    margin-top: 150px;
-    margin-bottom: 150px;
-  }
-  @media ${devices.laptop} {
-    margin-top: 250px;
-  }
-`;
-
-const Button_Group = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 0 auto;
-`;
-const Brand_name = styled.h1`
-  font-family: Montserrat;
-  text-decoration: underline;
-  font-weight: 400;
-  line-height: 117px;
-  letter-spacing: 0em;
-  text-align: left;
-  @media ${devices.root} {
-    font-size: 48px;
-  }
+  padding-top: 20px;
+  
+  flex-direction: column;
   @media ${devices.tablet} {
-    font-size: 96px;
-  }
-`;
-const CTA = styled.p`
-  font-family: Montserrat;
-  padding: 0 15px;
-  font-weight: 400;
-  letter-spacing: 0em;
-  text-align: center;
-  max-width: 700px;
-  @media ${devices.root} {
-    font-size: 24px;
+    padding: 20px;
+    flex-direction: row;
+    height: 100%;
   }
 `;
 
-const Button = styled.button`
-  margin: 10px;
-  padding: 8px 16px;
-  border: 1px solid #000;
-  background-color: #fff;
-  color: #000;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+const CarouselContainer = styled.div`
+  width: 70%;
+  border-radius: 100%;
+  background: #000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
-  &:hover {
-    background-color: #eee;
-  }
 `;
-const Iframe = styled.iframe`
+
+const _Image = styled.img`
+  width: 85%;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+  border-radius: 50%;
+  
   @media ${devices.root} {
     margin: 0 auto;
-    max-width: 325px;
+    max-width: 425px;
   }
+`;
+
+const QuoteAndSkillsContainer = styled.div`
+  width: 50%;
+  margin-top: 20px;
   @media ${devices.tablet} {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 500px;
+    padding-left: 40px;
   }
+`;
+
+const Quote = styled.p`
+  font-style: italic;
+`;
+
+const SkillsList = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+const SkillItem = styled.li`
+  margin: 5px 0;
 `;
 
 export default function About() {
-
   useMemo(() => {
     ReactGA.initialize(process.env.GA_TRACKING_ID || '');
     // Send pageview with a custom path
     ReactGA.send({
       hitType: 'pageview',
-      page: '/',
+      page: '/about',
       title: 'Moikas',
     });
   }, [process.env.GA_TRACKING_ID]);
+    const images = [
+      'profile_001.png',
+      // ... more images
+    ];
+
+    const quote =
+      'You Are The Average Of The Five People You Spend The Most Time With';
+    const skills = [
+      'JavaScript',
+      'TypeScript',
+      'React',
+      'Styled-Components',
+      'Node.js',
+      'NextJS',
+      'MongoDB',
+      'GraphQL',
+      'Apollo',
+      'Rust',
+
+    ];
+
   return (
     <Main>
       <Navbar />
 
-      <Container></Container>
+      <AboutSectionContainer>
+        <Carousel images={images} />
+        <QuoteAndSkillsContainer>
+          <Quote>{quote}</Quote>
+          <hr/>
+          <SkillsList>
+            {skills.map((skill, index) => (
+              <SkillItem key={index}>{skill}</SkillItem>
+            ))}
+          </SkillsList>
+        </QuoteAndSkillsContainer>
+      </AboutSectionContainer>
     </Main>
   );
 }
+// Props interfaces
+interface AboutSectionProps {
+  images: string[];
+  quote: string;
+  skills: string[];
+}
+// Carousel component
+const Carousel: React.FC<{ images: string[] }> = ({ images }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+  };
+
+  return (
+    <CarouselContainer onClick={goToNext}>
+      <_Image src={images[currentIndex]} alt={`Slide ${currentIndex + 1}`} />
+    </CarouselContainer>
+  );
+};
