@@ -119,9 +119,7 @@ const Iframe = styled.iframe`
 `;
 
 export default function About() {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [showRSSFeed, setShowRSSFeed] = useState<boolean>(true);
-  const [showHeader, setShowHeader] = useState<boolean>(true);
+
   useMemo(() => {
     ReactGA.initialize(process.env.GA_TRACKING_ID || '');
     // Send pageview with a custom path

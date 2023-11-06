@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import {DateTime} from 'luxon';
 import Link from 'next/link';
 import H from '../common/H';
-import getFeedItems, {FeedItem} from '@/hooks/useFeedQuery';
+import useFeedQuery, {FeedItem} from '@/hooks/useFeedQuery';
 
 const RSSFeed: React.FC<{
   title: string;
@@ -21,7 +21,7 @@ const RSSFeed: React.FC<{
   const {ReactGA}: any = useContext(Data_Context);
 
 
-  const {feed, copyrights, loading} = getFeedItems(urls, onComplete);
+  const {feed, copyrights, loading} = useFeedQuery(urls, onComplete);
 
   if (loading)
     return (

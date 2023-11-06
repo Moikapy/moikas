@@ -7,7 +7,7 @@ export interface FeedItem {
   contentSnippet: string;
   pubDate: string;
 }
-export default function getFeedItems(urls: string[], onComplete: Function) {
+export default function useFeedQuery(urls: string[], onComplete: Function) {
   const [feed, setFeedItems] = useState<FeedItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [copyrights, setCopyrights] = useState<string[]>([]);
