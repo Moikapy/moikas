@@ -1,21 +1,16 @@
 'use client';
 // src/components/RSSFeed.tsx
 
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useMemo, useContext} from 'react';
 import Container from '../container';
 import styles from '../../styles/RSSFeed.module.css'; // Adjust the path based on your directory structure
 import {truncate} from '@/lib/utils';
-import ReactGA from 'react-ga4';
+import {Data_Context} from '@/components/Data_Provider';
 import styled from 'styled-components';
 import {DateTime} from 'luxon';
 import Link from 'next/link';
 import H from '../common/H';
-interface FeedItem {
-  title: string;
-  link: string;
-  contentSnippet: string;
-  pubDate: string;
-}
+import getFeedItems, {FeedItem} from '@/hooks/getFeedItems';
 
 const RSSFeed: React.FC<{
   title: string;
@@ -23,56 +18,10 @@ const RSSFeed: React.FC<{
   isCard?: boolean;
   onComplete?: Function;
 }> = ({title, urls, onComplete = () => {}, isCard = false}) => {
-  const [feedItems, setFeedItems] = useState<FeedItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [copyrights, setCopyrights] = useState<string[]>([]);
-  ReactGA.initialize(process.env.GA_TRACKING_ID || '');
+  const {ReactGA}: any = useContext(Data_Context);
 
-  const items: any =
-    useMemo(async () => {
-      const fetchRSSFeed = async (url: string) => {
-        try {
-          const response = await fetch(
-            `/api/rss?url=${encodeURIComponent(url)}`
-          );
-          const data = await response.json();
-          return data;
-        } catch (error) {
-          console.error('Error fetching RSS feed:', error);
-          return null;
-        }
-      };
 
-      const fetchAllFeeds = async () => {
-        const allFeedItems: FeedItem[][] = [];
-        const allCopyrights: string[] = [];
-
-        for (const url of urls) {
-          const data = await fetchRSSFeed(url);
-          if (data) {
-            allFeedItems.push(data.items as FeedItem[]);
-            allCopyrights.push(data.copyright);
-          }
-        }
-        const items = allFeedItems
-          .flat()
-          .sort(
-            (a, b) =>
-              new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime()
-          );
-
-        setFeedItems(items);
-        setCopyrights(allCopyrights);
-        setLoading(false);
-        await onComplete();
-
-        return items;
-      };
-      const feedItems = await fetchAllFeeds();
-
-      return feedItems;
-    }, [urls]) || [];
-
+  const {feed, copyrights, loading} = getFeedItems(urls, onComplete);
 
   if (loading)
     return (
@@ -103,10 +52,12 @@ const RSSFeed: React.FC<{
 
   return (
     <Feed>
-      <H type='3' className=''>{title}</H>
+      <H type='3' className=''>
+        {title}
+      </H>
       <>
         <Feed_Content>
-          {feedItems.map((item: FeedItem, idx) =>
+          {feed.map((item: FeedItem, idx) =>
             !isCard ? (
               <RSS_List_Item item={item} key={idx} />
             ) : (
@@ -125,6 +76,7 @@ const RSSFeed: React.FC<{
 export default RSSFeed;
 
 function RSS_List_Item({item}: {item: any}) {
+    const {ReactGA}: any = useContext(Data_Context);
   return (
     <div
       className={styles.feedContainer}
@@ -154,8 +106,7 @@ function RSS_List_Item({item}: {item: any}) {
   );
 }
 function RSS_Card_Item({item}: {item: any}) {
-
-
+    const {ReactGA}: any = useContext(Data_Context);
   const Card = styled.div`
     position: relative;
     text-align: left;
@@ -184,28 +135,33 @@ function RSS_Card_Item({item}: {item: any}) {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
   `;
 
-  const Tag = styled.div`
+  const Tag = styled.p`
     position: absolute;
     bottom: 0;
     left: 0;
+    height:25px;
+    margin:0;
     padding: 5px 10px;
     border-radius: 0 0 0 10px;
+    border: 1px solid #000;
     background-color: #000;
     color: #fff;
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
   `;
-  const Date = styled.div`
+  const Date = styled.p`
     position: absolute;
     bottom: 0;
     right: 0;
+    height: 25px;
+    margin: 0;
     padding: 5px 10px;
     border-radius: 0 0 10px 0;
     background-color: #000;
+    border: 1px solid #000;
     color: #fff;
     font-size: 8px;
     font-weight: 600;
@@ -225,13 +181,6 @@ function RSS_Card_Item({item}: {item: any}) {
         });
       }}>
       <Link href={item.link} prefetch={true} target='_blank'>
-        <Tag>
-          {item.creator == 'Moikapy'
-            ? 'Blog'
-            : item.author == 'Moikapy TV'
-            ? 'Video'
-            : 'Store'}
-        </Tag>
         <Card_Content className={styles.feedItem}>
           <Text_section>
             <h2 className={`${styles.feedTitle} text-truncate`}>
@@ -241,7 +190,14 @@ function RSS_Card_Item({item}: {item: any}) {
               {truncate(item.contentSnippet || '', 140)}
             </p>
           </Text_section>
-          <Date className={styles.feedSnippet}>
+          <Tag>
+            {item.creator == 'Moikapy'
+              ? 'Blog'
+              : item.author == 'Moikapy TV'
+              ? 'Video'
+              : 'Store'}
+          </Tag>
+          <Date>
             {item.author !== 'Moikapy TV'
               ? DateTime.fromRFC2822(
                   item.pubDate || item.published || ''

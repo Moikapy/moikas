@@ -1,5 +1,5 @@
+'use client'
 // components/TwitchStream.tsx
-
 import React, { useState, useMemo, useRef, RefObject } from "react";
 import styled from "styled-components";
 
