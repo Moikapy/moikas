@@ -6,6 +6,15 @@ const nextConfig = {
     TWITCH_CLIENT_SECRET: process.env.TWITCH_CLIENT_SECRET,
     GA_TRACKING_ID:process.env.GA_TRACKING_ID,
   },
+  redirects: async () => {
+    return[
+      {
+        source: '/shop',
+        destination: 'https://shop.moikas.com',
+        permanent: true,
+      }
+    ]
+  }
 };
 
 module.exports = nextConfig
