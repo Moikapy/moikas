@@ -51,7 +51,7 @@ const _Image = styled.img`
   @media ${devices.tablet} {
     width: 100%;
     min-width: 425px;
-    max-width: 550px;
+    max-width: 528px;
   }
 `;
 
