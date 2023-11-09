@@ -99,10 +99,10 @@ const Navbar = () => {
                       href='/about'>
                       <div className='h-6 w-6' />
                       <div className='mb-2 mt-4 text-lg font-medium'>
-                        About Me
+                        About
                       </div>
                       <p className='text-sm leading-tight text-muted-foreground'>
-                        A brief introduction page about me.
+                        A little bit about me
                       </p>
                     </a>
                   </NavigationMenuLink>
@@ -118,7 +118,7 @@ const Navbar = () => {
                     });
                   }}
                   asChild>
-                  <Link target='_blank' href='https://shop.moikas.com' passHref>
+                  <Link target='_blank' href='https://moikas.com/shop' passHref>
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}>
                       Shop
