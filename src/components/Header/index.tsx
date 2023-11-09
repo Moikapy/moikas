@@ -26,9 +26,12 @@ const Brand_name = styled.h1`
   letter-spacing: 0em;
   text-align: left;
   @media ${devices.root} {
-    font-size: 48px;
+    font-size: 56px;
   }
   @media ${devices.tablet} {
+    font-size: 72px;
+  }
+  @media ${devices.laptop} {
     font-size: 96px;
   }
 `;
@@ -40,6 +43,9 @@ const CTA = styled.p`
   text-align: center;
   max-width: 700px;
   @media ${devices.root} {
+    font-size: 16px;
+  }
+  @media ${devices.tablet} {
     font-size: 24px;
   }
 `;
