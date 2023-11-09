@@ -43,7 +43,7 @@ const _Image = styled.img`
   object-fit: fill;
   border-radius: 1rem;
   padding: 0.5rem;
-
+  cursor: pointer;
   @media ${devices.root} {
     margin: 0 auto;
     max-width: 325px;
@@ -113,6 +113,7 @@ export default function About() {
   }, [process.env.GA_TRACKING_ID]);
   const images = [
     'profile_001.png',
+    'profile_002.jpeg',
     // ... more images
   ];
 
@@ -138,7 +139,7 @@ export default function About() {
     <Main>
       <Navbar />
 
-      <AboutSectionContainer>
+      <AboutSectionContainer title='Click Me!'>
         <Carousel images={images} />
         <QuoteAndSkillsContainer>
           <H className='' type='1'>
