@@ -74,9 +74,11 @@ export default function Header() {
     <_Header>
       {' '}
       <Brand_name>MOIKAS</Brand_name>
-      <CTA>Gain the latest insights and discoveries in AI.</CTA>
+      <CTA>Stay Ahead with AI <br/>Discover the Latest Gear and Insights Here!</CTA>
       <Button>
-        <Link target='_self' href={'https://moikas.com/shop'}>Shop</Link>
+        <Link target='_self' href={'https://moikas.com/shop'}>
+          Shop
+        </Link>
       </Button>
     </_Header>
   );
