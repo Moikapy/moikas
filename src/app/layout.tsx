@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
 import './globals.css';
+import StyledComponentsRegistry from '@/lib/registry';
+import GlobalStyles from '@/styles/GlobalStyles';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -30,7 +32,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           rel='stylesheet'></link>
       </head>
 
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <StyledComponentsRegistry>
+          <GlobalStyles />{children}
+        </StyledComponentsRegistry>
+      </body>
 
       <script
         async

@@ -1,29 +1,23 @@
 'use client';
-// src/components/RSSFeed.tsx
-
+// src/components/Blog_Feed.tsx
+import ReactGA from 'react-ga4';
 import React, {useState, useMemo, useContext} from 'react';
-import Container from '../container';
-import styles from '../../styles/RSSFeed.module.css'; // Adjust the path based on your directory structure
+import Container from '../container'; // Adjust the path based on your directory structure
 import {truncate} from '@/lib/utils';
 import {Data_Context} from '@/components/Data_Provider';
 import styled from 'styled-components';
 import {DateTime} from 'luxon';
+import styles from '../../styles/RSSFeed.module.css';
 import Link from 'next/link';
 import H from '../common/H';
-import useFeedQuery, {FeedItem} from '@/hooks/useFeedQuery';
+import {FeedItem} from '@/hooks/useFeedQuery';
 
-const RSSFeed: React.FC<{
-  title: string;
-  urls: string[];
+const Blog_Feed: React.FC<{
+  items: any[];
   isCard?: boolean;
   onComplete?: Function;
-}> = ({title, urls, onComplete = () => {}, isCard = false}) => {
-  const {ReactGA}: any = useContext(Data_Context);
-
-
-  const {feed, copyrights, loading} = useFeedQuery(urls, onComplete);
-
-  if (loading)
+}> = ({items, onComplete = () => {}, isCard = false}) => {
+  if (false)
     return (
       <Container>
         <p>Loading...</p>
@@ -33,6 +27,7 @@ const RSSFeed: React.FC<{
   const Feed = styled.div`
     font-family: 'Montserrat', sans-serif;
     max-width: ${isCard ? '100%' : '800px'};
+    width: 100%;
     margin: 0 0.5rem;
     padding: 20px;
     height: 100%;
@@ -43,8 +38,8 @@ const RSSFeed: React.FC<{
     display: flex;
     width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
-    flex-direction: ${isCard ? 'row' : 'column'};
+
+    flex-direction: column;
     justify-content: space-around;
 
     flex-wrap: wrap;
@@ -52,31 +47,25 @@ const RSSFeed: React.FC<{
 
   return (
     <Feed>
-      <H type='3' className=''>
-        {title}
-      </H>
       <>
         <Feed_Content>
-          {feed.map((item: FeedItem, idx) =>
+          {items.map((item: FeedItem, idx) =>
             !isCard ? (
-              <RSS_List_Item item={item} key={idx} />
+              <Blog_Fist_Item item={item} key={idx} />
             ) : (
-              <RSS_Card_Item item={item} key={idx} />
+              <Blog_Card_Item item={item} key={idx} />
             )
           )}
         </Feed_Content>
       </>
-      <hr />
-      <br />
-      {(copyrights && copyrights[0]) || ''}
     </Feed>
   );
 };
 
-export default RSSFeed;
+export default Blog_Feed;
 
-function RSS_List_Item({item}: {item: any}) {
-    const {ReactGA}: any = useContext(Data_Context);
+function Blog_Fist_Item({item}: {item: any}) {
+  // const {ReactGA}: any = useContext(Data_Context);
   return (
     <div
       className={styles.feedContainer}
@@ -84,29 +73,32 @@ function RSS_List_Item({item}: {item: any}) {
         // Send a custom event
 
         ReactGA.event({
-          category: 'rss_feed',
+          category: 'Blog_Feed',
           action: 'clicked',
           label: item.title,
         });
       }}>
       <div className={styles.feedItem}>
         <h2 className={styles.feedTitle}>
-          <a href={item.link} target='_blank' rel='noopener noreferrer'>
+          <a
+            href={item.link ? item.link : ''}
+            target='_blank'
+            rel='noopener noreferrer'>
             {item.title}
           </a>
         </h2>
         <p className={styles.feedSnippet}>
-          {truncate(item.contentSnippet || '', 280)}
+          {item.contentSnippet && truncate(item.contentSnippet || '', 280)}
         </p>
         <p className={styles.feedSnippet}>
-          {DateTime.fromRFC2822(item.pubDate).toFormat('FF ZZ')}
+          {item.pubDate && DateTime.fromRFC2822(item.pubDate).toFormat('FF ZZ')}
         </p>
       </div>
     </div>
   );
 }
-function RSS_Card_Item({item}: {item: any}) {
-    const {ReactGA}: any = useContext(Data_Context);
+function Blog_Card_Item({item}: {item: any}) {
+  // const {ReactGA}: any = useContext(Data_Context);
   const Card = styled.div`
     position: relative;
     text-align: left;
@@ -123,6 +115,7 @@ function RSS_Card_Item({item}: {item: any}) {
       background-color: #eee;
     }
     border: 1px solid #eee;
+    min-width: 300px;
   `;
   const Card_Content = styled.div`
     display: flex;
@@ -141,8 +134,8 @@ function RSS_Card_Item({item}: {item: any}) {
     position: absolute;
     bottom: 0;
     left: 0;
-    height:25px;
-    margin:0;
+    height: 25px;
+    margin: 0;
     padding: 5px 10px;
     border-radius: 0 0 0 10px;
     border: 1px solid #000;
@@ -175,30 +168,24 @@ function RSS_Card_Item({item}: {item: any}) {
       onClick={() => {
         // Send a custom event=
         ReactGA.event({
-          category: 'rss_feed',
+          category: 'Blog_Feed',
           action: 'clicked',
           label: item.title,
         });
       }}>
-      <Link href={item.link} prefetch={true} target='_self'>
+      <Link href={item.link ? item.link : ''} prefetch={true} target='_self'>
         <Card_Content className={styles.feedItem}>
           <Text_section>
             <h2 className={`${styles.feedTitle} text-truncate`}>
               {item.title}
             </h2>
             <p className={`${styles.feedSnippet} text-truncate`}>
-              {truncate(item.contentSnippet || '', 140)}
+              {item.contentSnippet && truncate(item.contentSnippet || '', 140)}
             </p>
           </Text_section>
-          <Tag>
-            {item.creator == 'Moikapy'
-              ? 'Blog'
-              : item.author == 'Moikapy TV'
-              ? 'Video'
-              : 'Store'}
-          </Tag>
+          <Tag>{item.author ? item.author : ''}</Tag>
           <Date>
-            {item.author !== 'Moikapy TV'
+            {item.pubDate && item.author !== 'Moikapy TV'
               ? DateTime.fromRFC2822(
                   item.pubDate || item.published || ''
                 ).toFormat('FF ZZ')
