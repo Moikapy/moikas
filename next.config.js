@@ -15,6 +15,25 @@ const nextConfig = {
         destination: 'https://shop.moikas.com',
         permanent: true,
       },
+      {
+        source: '/digital',
+        destination: 'https://moikapylookout.gumroad.com/',
+        permanent: true,
+      },
+      {
+        source: '/blog',
+        destination: 'https://moikas.beehiiv.com/',
+        permanent: false,
+      },
+
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: '/',
+      },
     ];
   },
 };

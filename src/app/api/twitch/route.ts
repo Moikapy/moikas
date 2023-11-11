@@ -2,20 +2,6 @@
 
 import {type NextRequest} from 'next/server';
 
-// async function checkIfLive(username: string) {
-//   try {
-//     const response = await fetch(`https://twitch.tv/${username}`);
-//     const sourceCode = await response.text();
-
-//     if (sourceCode.includes('isLiveBroadcast')) {
-//       console.log(`${username} is live`);
-//     } else {
-//       console.log(`${username} is not live`);
-//     }
-//   } catch (error) {
-//     console.log('Error occurred:', error);
-//   }
-// }
 export async function GET(request: NextRequest) {
   let accessToken = process.env.ACCESS_TOKEN || '';
 
@@ -52,8 +38,6 @@ export async function GET(request: NextRequest) {
   const data = await response.json();
 
   try {
-    // console.log(data)
-    // checkIfLive('moikapy');
     return new Response(JSON.stringify(data), {status: 200});
   } catch (error: any) {
     console.error('Error parsing RSS feed:', error.message);

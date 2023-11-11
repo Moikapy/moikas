@@ -32,7 +32,7 @@ const Iframe = styled.iframe`
 width: 100%;
   @media ${devices.root} {
     margin: 0 auto;
-    max-width: 425px;
+    max-width: 345px;
   }
   @media ${devices.tablet} {
     display: flex;

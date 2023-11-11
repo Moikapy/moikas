@@ -1,4 +1,4 @@
-import _Home from '@/components/views/Home';
+import _Home from '@/views/Home';
 export default async function Home() {
   const {
     props: {isLive},

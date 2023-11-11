@@ -12,7 +12,7 @@ const _Header = styled.div`
 
   @media ${devices.root} {
     margin-top: 150px;
-    margin-bottom: 75px;
+    margin-bottom: 50px;
   }
   @media ${devices.laptop} {
     margin-top: 250px;
@@ -50,6 +50,11 @@ const CTA = styled.p`
     font-size: 24px;
   }
 `;
+const Button_Group = styled.div`
+  display: flex;
+
+  flex-direction: row;
+`;
 
 const Button = styled.button`
   margin: 1rem 5px;
@@ -74,12 +79,23 @@ export default function Header() {
     <_Header>
       {' '}
       <Brand_name>MOIKAS</Brand_name>
-      <CTA>Stay Ahead with AI <br/>Discover the Latest Gear and Insights Here!</CTA>
-      <Button>
-        <Link target='_self' href={'https://moikas.com/shop'}>
-          Shop
+      <CTA>
+        Stay Ahead with AI <br />
+        Discover the Latest Gear and Insights Here!
+      </CTA>
+      <Button_Group>
+        <Link target='_self' href={'/blog'}>
+          <Button>Blog</Button>
         </Link>
-      </Button>
+        <Link target='_self' href={'/digital'}>
+          <Button>Digital</Button>
+        </Link>
+        <Button>
+          <Link target='_self' href={'/shop'}>
+            Shop
+          </Link>
+        </Button>
+      </Button_Group>
     </_Header>
   );
 }

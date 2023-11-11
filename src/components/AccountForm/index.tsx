@@ -1,12 +1,12 @@
 'use client';
+import styled from 'styled-components';
 import {useCallback, useEffect, useState} from 'react';
 import {
   Session,
   createClientComponentClient,
 } from '@supabase/auth-helpers-nextjs';
-import exp from 'constants';
 
- const AccountForm = ({session}: {session: Session | null}):any =>{
+const AccountForm = ({session}: {session: Session | null}): any => {
   const supabase = createClientComponentClient<any>();
   const [loading, setLoading] = useState(true); // [1
   const [fullname, setFullname] = useState<string | null>(null);
@@ -18,12 +18,11 @@ import exp from 'constants';
   const getProfile = useCallback(async () => {
     try {
       setLoading(true);
-      const {data, error, status}:any = await supabase
+      const {data, error, status}: any = await supabase
         .from('users')
         .select(`name, user_name`)
         .eq('user_id', user?.id)
         .single();
-
       if (error && status !== 406) {
         throw error;
       }
@@ -34,8 +33,8 @@ import exp from 'constants';
         // setWebsite(data.website);
         // setAvatarUrl(data.avatar_url);
       }
-    } catch (error) {
-      // alert('Error loading user data!');
+    } catch (error: any) {
+      console.error('Error loading user data!', error.message);
     } finally {
       setLoading(false);
     }
@@ -77,9 +76,28 @@ import exp from 'constants';
       setLoading(false);
     }
   }
+  const  Form_widget = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  min-width: 18.75rem;
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid #000;
+
+  margin-top: 6rem;
+
+  padding: 1rem;
+  max-width: 500px;
+  & > div {
+    width: 100%;
+  }
+  
+  `;
 
   return (
-    <div className='form-widget'>
+    <Form_widget>
       <div>
         <label htmlFor='email'>Email</label>
         <input id='email' type='text' value={session?.user.email} disabled />
@@ -130,7 +148,7 @@ import exp from 'constants';
           </button>
         </form>
       </div>
-    </div>
+    </Form_widget>
   );
-}
+};
 export default AccountForm;
