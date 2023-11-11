@@ -5,7 +5,7 @@ import {
   createClientComponentClient,
 } from '@supabase/auth-helpers-nextjs';
 
-export default function AccountForm({session}: {session: Session | null}) {
+ const AccountForm = ({session}: {session: Session | null}):any =>{
   const supabase = createClientComponentClient<any>();
   const [loading, setLoading] = useState(true); // [1
   const [fullname, setFullname] = useState<string | null>(null);
@@ -51,8 +51,8 @@ export default function AccountForm({session}: {session: Session | null}) {
   }: {
     user_name: string | null;
     fullname: string | null;
-    website: string | null;
-    avatar_url: string | null;
+    website?: string | null;
+    avatar_url?: string | null;
   }) {
     try {
       setLoading(true);
@@ -115,7 +115,7 @@ export default function AccountForm({session}: {session: Session | null}) {
         <button
           className='button primary block'
           onClick={() =>
-            updateProfile({fullname, username, website, avatar_url})
+            updateProfile({fullname, user_name, website, avatar_url})
           }
           disabled={loading}>
           {loading ? 'Loading ...' : 'Update'}
