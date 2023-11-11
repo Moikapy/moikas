@@ -4,18 +4,25 @@ import Link from 'next/link';
 
 const _Header = styled.div`
   display: flex;
-  max-width: 800px;
-  width: 100vw;
-  min-width: 100%;
+ max-width: 500px;
+  width: 100%;
+  min-width: 435px;
   flex-direction: column;
   align-items: center;
 
   @media ${devices.root} {
-    margin-top: 150px;
+    margin-top: 100px;
     margin-bottom: 50px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+  @media ${devices.mobileM} {
+    margin-left: auto;
+    margin-right: auto;
+    
   }
   @media ${devices.laptop} {
-    margin-top: 250px;
+    margin-top: 200px;
   }
 `;
 
