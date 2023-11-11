@@ -48,7 +48,7 @@ width: 100%;
   }
 `;
 
-export default function Home() {
+export default function Home({isLive = false}: {isLive: boolean;}) {
   const [showHeader, setShowHeader] = useState(true);
 
   const [showRSSFeed, setShowRSSFeed] = useState(true);
@@ -72,6 +72,7 @@ export default function Home() {
             {showHeader && <Header />}
 
             <TwitchStream
+            isLive={isLive}
             onComplete={(e: boolean): void => {
               setShowHeader(!e);
             }}

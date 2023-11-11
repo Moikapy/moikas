@@ -1,7 +1,7 @@
-'use client'
+'use client';
 // components/TwitchStream.tsx
-import React, { useState, useMemo, useRef, RefObject } from "react";
-import styled from "styled-components";
+import React, {useState, useMemo, useRef, RefObject} from 'react';
+import styled from 'styled-components';
 
 // Extend the Window interface to include Twitch
 declare global {
@@ -13,7 +13,7 @@ declare global {
 const StreamContainer = styled.div`
   /* Add your styles here */
   width: 100%;
-  height:100vw;
+  height: 100vw;
   max-height: 800px;
   margin-bottom: 4px;
 `;
@@ -24,29 +24,31 @@ interface Props {
 }
 
 const TwitchStream = ({
+  isLive = false,
   onComplete = (e: any) => {},
 }: {
+  isLive: boolean;
   onComplete?: (e: any) => void;
 }) => {
-  const [isLive, setIsLive] = useState(false);
+  // const [_isLive, setIsLive] = useState(false);
 
-  useMemo(() => {
-    const checkStreamStatus = async () => {
-      try {
-        const response = await fetch(`/api/twitch`);
-        const data = await response.json();
-        setIsLive(data.data && data.data.length > 0);
-        onComplete(data.data && data.data.length > 0);
-      } catch (error) {
-        console.error("Error fetching Twitch stream status:", error);
-      }
-    };
+  // useMemo(() => {
+  //   const checkStreamStatus = async () => {
+  //     try {
+  //       const response = await fetch(`/api/twitch`);
+  //       const data = await response.json();
+  //       setIsLive(data.data && data.data.length > 0);
+  //       onComplete(data.data && data.data.length > 0);
+  //     } catch (error) {
+  //       console.error('Error fetching Twitch stream status:', error);
+  //     }
+  //   };
 
-    checkStreamStatus();
-    const interval = setInterval(checkStreamStatus, 60000); // Check every minute
+  //   checkStreamStatus();
+  //   const interval = setInterval(checkStreamStatus, 60000); // Check every minute
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   if (!isLive) return null;
 
@@ -55,15 +57,15 @@ const TwitchStream = ({
 
 export default TwitchStream;
 
-const TwitchEmbedVideo = ({ ...props }: any) => {
+const TwitchEmbedVideo = ({...props}: any) => {
   const embedRef = useRef<any | null>(null);
   const scriptRef = useRef(null);
   useMemo(() => {
     // Load the Twitch embed script
     if (!scriptRef.current) {
-      const script = document.createElement("script");
-      script.setAttribute("src", "https://embed.twitch.tv/embed/v1.js");
-      script.addEventListener("load", () => {
+      const script = document.createElement('script');
+      script.setAttribute('src', 'https://embed.twitch.tv/embed/v1.js');
+      script.addEventListener('load', () => {
         // window.Twitch = window.Twitch as typeof Twitch;
         // Create the embed instance once the script is loaded
         if (
@@ -71,15 +73,15 @@ const TwitchEmbedVideo = ({ ...props }: any) => {
           embedRef.current &&
           embedRef.current.childNodes.length <= 0
         ) {
-         
-          new window.Twitch.Embed(embedRef.current, {
+          const twitch = new window.Twitch.Embed(embedRef.current, {
             ...props,
-            channel: process.env.TWITCH_CHANNEL_NAME,
+            channel: process.env.TWITCH_CHANNEL_NAME || 'moikapy',
             autoplay: true,
-            height: "100%",
-            width: "100%",
-            parent: ["moikas.com"],
+            height: '100%',
+            width: '100%',
+            parent: ['www.moikas.com', 'moikas.com'],
           });
+          console.log('twitch', twitch, twitch.getEnded(), twitch.getVideo());
         }
       });
 

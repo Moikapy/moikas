@@ -1,17 +1,24 @@
-'use client';
-import ReactGA from 'react-ga4';
 import _Home from '@/components/views/Home';
-import {useMemo} from 'react';
+export default async function Home() {
+  const {
+    props: {isLive},
+  } = await getData();
 
-export default function Home() {
-  useMemo(() => {
-    // Send pageview with a custom path
-    ReactGA &&
-      ReactGA?.send({
-        hitType: 'pageview',
-        page: '/',
-        title: 'Moikas',
-      });
-  }, [process.env.GA_TRACKING_ID]);
-  return <_Home />;
+  return <_Home isLive={(await isLive) || false} />;
 }
+export const getData = async () => {
+  const checkStreamStatus = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/twitch`, {
+        next: {revalidate: 60},
+      });
+      const data = await response.json();
+
+      return data.data && (await data.data.length) > 0;
+    } catch (error) {
+      console.error('Error fetching Twitch stream status:', error);
+    }
+  };
+
+  return {props: {isLive: checkStreamStatus()}};
+};

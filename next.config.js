@@ -1,16 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  compiler: {
-    styledComponents: {
-      ssr: true,
-      topLevelImportPaths: [
-        '@xstyled/styled-components',
-        '@xstyled/styled-components/no-tags',
-        '@xstyled/styled-components/native',
-        '@xstyled/styled-components/primitives',
-      ],
-    },
-  },
   env: {
     TWITCH_CHANNEL_NAME: process.env.TWITCH_CHANNEL_NAME,
     TWITCH_CLIENT_ID: process.env.TWITCH_CLIENT_ID,
