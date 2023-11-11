@@ -4,6 +4,7 @@ import {
   Session,
   createClientComponentClient,
 } from '@supabase/auth-helpers-nextjs';
+import exp from 'constants';
 
  const AccountForm = ({session}: {session: Session | null}):any =>{
   const supabase = createClientComponentClient<any>();
@@ -132,3 +133,4 @@ import {
     </div>
   );
 }
+export default AccountForm;
