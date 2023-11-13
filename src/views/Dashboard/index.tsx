@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import TextEditor from '@/components/TextEditor';
 
 const Main = styled.main`
-  /* Add your main styles here if any */
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -28,6 +27,7 @@ const Dashboard_Sidenav = styled.div`
   align-items: start;
   justify-content: start;
   width: 100px;
+  margin-top:0.5rem;
 `;
 const Dashboard_Div = styled.div<{$align?: string}>`
   display: flex;
@@ -38,20 +38,30 @@ const Dashboard_Div = styled.div<{$align?: string}>`
   padding: 0 1rem;
   flex-grow: 1;
 `;
+const Dashboard_Button_Group = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: start;
+  width: 100%;
+  max-width: 1200px;
+`;
+
 const Dashboard_Button = styled.button`
   border: 1px solid #000;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
   display: flex;
-  felx-direction: row;
+  flex-direction: row;
+
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
+  flex-grow: 1;
   padding: 0.5rem;
-  margin: 0.5rem 0;
+  margin-bottom: 0.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 600px;
   text-align: center;
 `;
 export default function Dashboard_View() {
@@ -59,29 +69,33 @@ export default function Dashboard_View() {
   return (
     <Main>
       <Navbar />
-      <Dashboard_Div>Dashboard </Dashboard_Div>
+      {/* <Dashboard_Div>Dashboard </Dashboard_Div>
       <Dashboard_Div>Manage your posts and profile</Dashboard_Div>
-      <hr />
+      <hr /> */}
       <Dashboard_Wrapper>
         <Dashboard_Sidenav>
-          <Dashboard_Button onClick={() => setShowPost(true)}>
+          <Dashboard_Button onClick={() => setShowPost(!showPostView)}>
             New
           </Dashboard_Button>
-          <Dashboard_Button>Profile</Dashboard_Button>
+          <Dashboard_Button onClick={() => setShowPost(false)}>
+            Profile
+          </Dashboard_Button>
         </Dashboard_Sidenav>
         <Dashboard_Div $align='center'>
-          {showPostView ? (
+          {showPostView && (
             <>
-              <Dashboard_Div>New Post</Dashboard_Div>
-              <New_Post_View />
-              <Dashboard_Button onClick={() => setShowPost(false)}>
-                Back
-              </Dashboard_Button>
+              {/* <Dashboard_Div>New Post</Dashboard_Div> */}
+              <New_Post_Form />
+
+              <Dashboard_Button_Group>
+                <Dashboard_Button onClick={() => setShowPost(false)}>
+                  Back
+                </Dashboard_Button>
+                <Dashboard_Button onClick={() => setShowPost(false)}>
+                  Publish
+                </Dashboard_Button>
+              </Dashboard_Button_Group>
             </>
-          ) : (
-            <Dashboard_Div $align='start'>
-              <div>Posts</div>
-            </Dashboard_Div>
           )}
         </Dashboard_Div>
       </Dashboard_Wrapper>
@@ -97,7 +111,7 @@ const New_Post = styled.div`
   width: 100%;
   height: 100%;
   max-width: 1200px;
-  min-height: 800px;
+  min-height: 775px;
   padding: 1rem 0;
   border: 1px solid #000;
   border-radius: 5px;
@@ -108,9 +122,8 @@ const New_Post_Title_Section = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding:1rem;
+  padding: 1rem;
   border-bottom: 1px solid #000;
-
 `;
 
 const New_Post_Title = styled.input`
@@ -128,17 +141,21 @@ const New_Post_Content = styled.div`
 
 const New_Post_Label = styled.label``;
 
-function New_Post_View() {
+function New_Post_Form() {
+  const [title, setTitle] = useState('');
+  const [subTitle, setSubTitle] = useState('');
+  const [content, setContent] = useState([]);
+  // console.log(content)
   return (
     <New_Post>
       <New_Post_Title_Section>
         <New_Post_Label>Title</New_Post_Label>
-        <New_Post_Title />
+        <New_Post_Title onChange={(e) => setTitle} />
         <New_Post_Label>Sub Title</New_Post_Label>
-        <New_Post_Title />
+        <New_Post_Title onChange={(e) => setSubTitle} />
       </New_Post_Title_Section>
       <New_Post_Content>
-        <TextEditor />
+        <TextEditor onChange={(e:any) => {setContent(e);console.log(e)}} />
       </New_Post_Content>
     </New_Post>
   );

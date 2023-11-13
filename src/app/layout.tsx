@@ -9,7 +9,7 @@ const inter = Inter({subsets: ['latin']});
 export const metadata: Metadata = {
   title: 'Moikas',
   description:
-    "Dive into the heart of the digital evolution with Moikas.com. As an AI-enthusiast and a visionary AIpreneur, explore how Artificial Intelligence is reshaping the realms of News, Gaming, Programming, Technology, Art, and Media. Moikas illuminates the path towards the future, offering a unique blend of insightful articles, engaging tutorials, and the latest updates in the AI ecosystem. Whether you're a developer, gamer, or tech-savvy individual, Moikas is your gateway to understanding and engaging with the AI-driven world. Embark on a journey of discovery and stay ahead of the curve with Moikas.com.",
+    'Explore Moikas.com for cutting-edge AI solutions and insights. Dive into our blog for the latest trends, shop the newest AI gear, and discover digital products that keep you ahead in the fast-evolving world of artificial intelligence.',
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

@@ -7,7 +7,7 @@ import {useState} from 'react';
 // Gets the previously stored editor contents.
 const initialContent: string | null = localStorage.getItem('editorContent');
 // Our <Editor> component we can reuse later
-export default function Editor() {
+export default function Editor({onChange=()=>{}}: any) {
   // Stores the editor's contents as an array of Block objects.
   const [blocks, setBlocks] = useState<Block[] | null>(null);
   // Creates a new editor instance.
@@ -19,8 +19,10 @@ export default function Editor() {
         JSON.stringify(editor.topLevelBlocks)
       );
       setBlocks(editor.topLevelBlocks);
+      onChange(editor.topLevelBlocks);
     },
   });
+  
 
   // Renders the editor instance using a React component.
   return <BlockNoteView editor={editor} />;
