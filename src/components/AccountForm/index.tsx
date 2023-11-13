@@ -5,6 +5,7 @@ import {
   Session,
   createClientComponentClient,
 } from '@supabase/auth-helpers-nextjs';
+import useProfileMutate from '@/hooks/useProfileMutate';
 const Form_widget = styled.div`
   display: flex;
   flex-direction: column;
@@ -130,7 +131,13 @@ const Button_Section = styled.div`
     background-color: #fff;
   }
 `;
-const AccountForm = ({session}: {session: Session | null}): any => {
+const AccountForm = ({
+  session,
+  updateProfile,
+}: {
+  session: Session | null;
+  updateProfile: any;
+}): any => {
   const supabase = createClientComponentClient<any>();
   const [loading, setLoading] = useState(true); // [1
   const [error, setError] = useState(true);
@@ -140,21 +147,22 @@ const AccountForm = ({session}: {session: Session | null}): any => {
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
   const user = session?.user;
 
-  const getProfile = useCallback(async() => {
+  const getProfile = useCallback(async () => {
     try {
       setLoading(true);
 
-      const {data, error, status}: any = supabase
+      const {data, error, status}: any =await supabase
         .from('users')
         .select(`name, user_name`)
         .eq('user_id', user?.id)
         .single();
-      console.log(data, error, status);
+      console.log(await data, await error, await status);
       if (error && status !== 406) {
         throw error;
       }
 
       if (data) {
+        console.log(data)
         setFullname(data.name);
         setUsername(data.user_name);
         // setWebsite(data.website);
@@ -171,40 +179,7 @@ const AccountForm = ({session}: {session: Session | null}): any => {
   useEffect(() => {
     console.log('useEffect');
     getProfile();
-  }, [user, getProfile]);
-
-  async function updateProfile({
-    user_name,
-    website,
-    avatar_url,
-  }: {
-    user_name: string | null;
-    fullname: string | null;
-    website?: string | null;
-    avatar_url?: string | null;
-  }) {
-    try {
-      setLoading(true);
-
-      const {error} = await supabase
-        .from('users')
-        .update({
-          user_id: user?.id as string,
-          name: fullname,
-          user_name: user_name,
-          // website,
-          // avatar_url,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('user_id', user?.id);
-      if (error) throw error;
-      alert('Profile updated!');
-    } catch (error) {
-      alert('Error updating the data!');
-    } finally {
-      setLoading(false);
-    }
-  }
+  }, []);
 
   return !loading ? (
     <Form_widget>

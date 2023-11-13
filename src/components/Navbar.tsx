@@ -26,7 +26,9 @@ const _Navbar = styled.div`
   felx-direction: row;
   justify-content: space-between;
   flex-shrink: 0;
-  padding-right: 40px;
+  @media (min-width: 768px) {
+    padding-right: 40px;
+  }
 `;
 
 const components: {title: string; href: string; description: string}[] = [
@@ -76,6 +78,26 @@ const Navbar = () => {
       </Link>
 
       <NavigationMenu>
+        <NavigationMenuItem
+          onClick={() => {
+            // Send a custom event
+
+            ReactGA.event({
+              category: 'navigation',
+              action: 'clicked',
+              label: 'login',
+            });
+          }}
+          asChild>
+          <Link
+            target='_self'
+            href='/login'
+            passHref>
+            <NavigationMenuLink className={''}>
+              Login
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
         <NavigationMenuList>
           <NavigationMenuItem className='NavigationMenuContent'>
             <NavigationMenuTrigger className='NavigationMenuContent'>
@@ -98,9 +120,7 @@ const Navbar = () => {
                       className='flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md'
                       href='/about'>
                       <div className='h-6 w-6' />
-                      <div className='mb-2 mt-4 text-lg font-medium'>
-                        About
-                      </div>
+                      <div className='mb-2 mt-4 text-lg font-medium'>About</div>
                       <p className='text-sm leading-tight text-muted-foreground'>
                         A little bit about me
                       </p>
@@ -118,7 +138,7 @@ const Navbar = () => {
                     });
                   }}
                   asChild>
-                  <Link target='_blank' href='https://moikas.com/shop' passHref>
+                  <Link target='_blank' href='/shop' passHref>
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}>
                       Shop
@@ -158,10 +178,7 @@ const Navbar = () => {
                     });
                   }}
                   asChild>
-                  <Link
-                    target='new'
-                    href='https://blog.moikaslookout.com'
-                    passHref>
+                  <Link target='new' href='/blog' passHref>
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}>
                       Newsletter

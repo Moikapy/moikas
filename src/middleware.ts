@@ -15,15 +15,15 @@ export async function middleware(req: NextRequest) {
 
   console.log('pathname', req.nextUrl.pathname);
   if (user && req.nextUrl.pathname === '/login') {
-    alert('You are already logged in');
-    return NextResponse.redirect(new URL('/', req.url));
+    console.log('You are already logged in');
+    return NextResponse.redirect(new URL('/dashboard', req.url));
   }
 
   // if user is not signed in and the current path is not / redirect the user to /
   if (
     (!user && req.nextUrl.pathname === '/profile') ||
     (!user && req.nextUrl.pathname === '/dashboard') ||
-    !user && req.nextUrl.pathname === '/*'
+    (!user && req.nextUrl.pathname === '/*')
   ) {
     return NextResponse.redirect(new URL('/login', req.url));
   }
@@ -32,5 +32,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/', '/profile'],
+  matcher: ['/', '/profile', '/dashboard', '/login', '/signup'],
 };
