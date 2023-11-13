@@ -1,5 +1,4 @@
-
-'use client'
+'use client';
 import {useMemo, useState} from 'react';
 export interface FeedItem {
   title: string;
@@ -17,7 +16,6 @@ export default function useFeedQuery(urls: string[], onComplete: Function) {
       const data = await response.json();
       return data;
     } catch (error) {
-      console.error('Error fetching RSS feed:', error);
       return null;
     }
   };

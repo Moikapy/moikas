@@ -40,7 +40,6 @@ export async function GET(request: NextRequest) {
   try {
     return new Response(JSON.stringify(data), {status: 200});
   } catch (error: any) {
-    console.error('Error parsing RSS feed:', error.message);
     return new Response(
       JSON.stringify({error: `Unable to fetch RSS feed: ${error.message}`}),
       {status: 500}

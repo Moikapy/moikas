@@ -30,26 +30,29 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <link
           href='https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap'
           rel='stylesheet'></link>
+
+        <script
+          async
+          src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5408519350906957'
+          crossOrigin='anonymous'></script>
+
+        <script async>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
       </head>
 
       <body className={inter.className}>
         <StyledComponentsRegistry>
-          <GlobalStyles />{children}
+          <GlobalStyles />
+          {children}
+          <ins
+            className='adsbygoogle'
+            data-ad-client='ca-pub-5408519350906957'
+            data-ad-slot='1130140494'
+            data-ad-format='auto'
+            data-full-width-responsive='true'></ins>
         </StyledComponentsRegistry>
       </body>
-
-      <script
-        async
-        src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5408519350906957'
-        crossOrigin='anonymous'></script>
-
-      <ins
-        className='adsbygoogle'
-        data-ad-client='ca-pub-5408519350906957'
-        data-ad-slot='1130140494'
-        data-ad-format='auto'
-        data-full-width-responsive='true'></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </html>
   );
 }

@@ -12,6 +12,25 @@ import Link from 'next/link';
 import H from '../common/H';
 import useFeedQuery, {FeedItem} from '@/hooks/useFeedQuery';
 
+const Feed = styled.div`
+  font-family: 'Montserrat', sans-serif;
+  max-width: ${true ? '100%' : '800px'};
+  margin: 0 0.5rem;
+  padding: 20px;
+  height: 100%;
+  text-align: center;
+`;
+
+const Feed_Content = styled.div`
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-direction: ${true ? 'row' : 'column'};
+  justify-content: space-around;
+
+  flex-wrap: wrap;
+`;
 const RSSFeed: React.FC<{
   title: string;
   urls: string[];
@@ -19,7 +38,6 @@ const RSSFeed: React.FC<{
   onComplete?: Function;
 }> = ({title, urls, onComplete = () => {}, isCard = false}) => {
   const {ReactGA}: any = useContext(Data_Context);
-
 
   const {feed, copyrights, loading} = useFeedQuery(urls, onComplete);
 
@@ -29,26 +47,6 @@ const RSSFeed: React.FC<{
         <p>Loading...</p>
       </Container>
     );
-
-  const Feed = styled.div`
-    font-family: 'Montserrat', sans-serif;
-    max-width: ${isCard ? '100%' : '800px'};
-    margin: 0 0.5rem;
-    padding: 20px;
-    height: 100%;
-    text-align: center;
-  `;
-
-  const Feed_Content = styled.div`
-    display: flex;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    flex-direction: ${isCard ? 'row' : 'column'};
-    justify-content: space-around;
-
-    flex-wrap: wrap;
-  `;
 
   return (
     <Feed>
@@ -76,7 +74,7 @@ const RSSFeed: React.FC<{
 export default RSSFeed;
 
 function RSS_List_Item({item}: {item: any}) {
-    const {ReactGA}: any = useContext(Data_Context);
+  const {ReactGA}: any = useContext(Data_Context);
   return (
     <div
       className={styles.feedContainer}
@@ -105,68 +103,69 @@ function RSS_List_Item({item}: {item: any}) {
     </div>
   );
 }
-function RSS_Card_Item({item}: {item: any}) {
-    const {ReactGA}: any = useContext(Data_Context);
-  const Card = styled.div`
-    position: relative;
-    text-align: left;
-    flex-shrink: 0;
-    margin: 0.5rem 0.5rem 3rem;
-    padding: 0 20px 20px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
-    cursor: pointer;
-    &:hover {
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      background-color: #eee;
-    }
-    border: 1px solid #eee;
-  `;
-  const Card_Content = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-  `;
-  const Text_section = styled.div`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  `;
+const Card = styled.div`
+  position: relative;
+  text-align: left;
+  flex-shrink: 0;
+  margin: 0.5rem 0.5rem 3rem;
+  padding: 0 20px 20px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-color: #eee;
+  }
+  border: 1px solid #eee;
+`;
+const Card_Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
+const Text_section = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
-  const Tag = styled.p`
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height:25px;
-    margin:0;
-    padding: 5px 10px;
-    border-radius: 0 0 0 10px;
-    border: 1px solid #000;
-    background-color: #000;
-    color: #fff;
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-  `;
-  const Date = styled.p`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    height: 25px;
-    margin: 0;
-    padding: 5px 10px;
-    border-radius: 0 0 10px 0;
-    background-color: #000;
-    border: 1px solid #000;
-    color: #fff;
-    font-size: 8px;
-    font-weight: 600;
-    text-transform: uppercase;
-  `;
+const Tag = styled.p`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 25px;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 0 0 0 10px;
+  border: 1px solid #000;
+  background-color: #000;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+`;
+const Date = styled.p`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 25px;
+  margin: 0;
+  padding: 5px 10px;
+  border-radius: 0 0 10px 0;
+  background-color: #000;
+  border: 1px solid #000;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+`;
+
+function RSS_Card_Item({item}: {item: any}) {
+  const {ReactGA}: any = useContext(Data_Context);
 
   return (
     <Card

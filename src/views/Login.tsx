@@ -1,9 +1,10 @@
 'use client';
-import {useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import styled from 'styled-components';
 import ReactGA from 'react-ga4';
 import Navbar from '@/components/Navbar';
 import AuthForm from '@/components/AuthForm';
+import {useRouter} from 'next/navigation';
 
 const Main = styled.main`
   /* Add your main styles here if any */
@@ -32,8 +33,9 @@ const Login_Container = styled.div`
   }
 `;
 
-export default function Login() {
-  useMemo(() => {
+export default function Login(session: any) {
+  const router = useRouter();
+  useCallback(() => {
     ReactGA.initialize(process.env.GA_TRACKING_ID || '');
     // Send pageview with a custom path
     ReactGA.send({
@@ -43,6 +45,12 @@ export default function Login() {
     });
   }, [process.env.GA_TRACKING_ID]);
 
+  // useEffect(() => {
+  //   router.push('/profile');
+  // }, [session]);
+  // if (session?.user) {
+  //   return <div>Already logged in</div>;
+  // }
   return (
     <Main>
       <Navbar />
