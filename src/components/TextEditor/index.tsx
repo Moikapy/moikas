@@ -4,10 +4,10 @@ import {BlockNoteView, useBlockNote} from '@blocknote/react';
 import '@blocknote/core/style.css';
 import {useState} from 'react';
 
-// Gets the previously stored editor contents.
-const initialContent: string | null = localStorage.getItem('editorContent');
 // Our <Editor> component we can reuse later
-export default function Editor({onChange=()=>{}}: any) {
+export default function Editor({onChange = () => {}}: any) {
+  // Gets the previously stored editor contents.
+  const initialContent: string | null = localStorage.getItem('editorContent');
   // Stores the editor's contents as an array of Block objects.
   const [blocks, setBlocks] = useState<Block[] | null>(null);
   // Creates a new editor instance.
@@ -22,7 +22,6 @@ export default function Editor({onChange=()=>{}}: any) {
       onChange(editor.topLevelBlocks);
     },
   });
-  
 
   // Renders the editor instance using a React component.
   return <BlockNoteView editor={editor} />;
