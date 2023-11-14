@@ -30,26 +30,6 @@ const TwitchStream = ({
   isLive: boolean;
   onComplete?: (e: any) => void;
 }) => {
-  // const [_isLive, setIsLive] = useState(false);
-
-  // useMemo(() => {
-  //   const checkStreamStatus = async () => {
-  //     try {
-  //       const response = await fetch(`/api/twitch`);
-  //       const data = await response.json();
-  //       setIsLive(data.data && data.data.length > 0);
-  //       onComplete(data.data && data.data.length > 0);
-  //     } catch (error) {
-  //       console.error('Error fetching Twitch stream status:', error);
-  //     }
-  //   };
-
-  //   checkStreamStatus();
-  //   const interval = setInterval(checkStreamStatus, 60000); // Check every minute
-
-  //   return () => clearInterval(interval);
-  // }, []);
-
   if (!isLive) return null;
 
   return <StreamContainer>{isLive && <TwitchEmbedVideo />}</StreamContainer>;

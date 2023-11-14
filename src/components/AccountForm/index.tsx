@@ -1,6 +1,6 @@
 'use client';
 import styled from 'styled-components';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Session,
   createClientComponentClient,
@@ -17,8 +17,6 @@ const Form_widget = styled.div`
   border-radius: 1rem;
   border: 1px solid #000;
   box-shadow: 0 0 10px #000;
-
-  margin-top: 6rem;
 
   padding: 1rem;
   max-width: 500px;
@@ -151,18 +149,17 @@ const AccountForm = ({
     try {
       setLoading(true);
 
-      const {data, error, status}: any =await supabase
+      const {data, error, status}: any = await supabase
         .from('users')
         .select(`name, user_name`)
         .eq('user_id', user?.id)
         .single();
-      console.log(await data, await error, await status);
       if (error && status !== 406) {
         throw error;
       }
 
       if (data) {
-        console.log(data)
+        console.log(data);
         setFullname(data.name);
         setUsername(data.user_name);
         // setWebsite(data.website);
@@ -176,8 +173,7 @@ const AccountForm = ({
     }
   }, [user, supabase]);
 
-  useEffect(() => {
-    console.log('useEffect');
+  useMemo(() => {
     getProfile();
   }, []);
 

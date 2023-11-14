@@ -1,21 +1,18 @@
 'use client';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import styled from 'styled-components';
 import ReactGA from 'react-ga4';
 import Navbar from '@/components/Navbar';
 import Blog_Feed from '@/components/Blog_Feed';
 
-const Main = styled.main`
-  /* Add your main styles here if any */
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import usePostsQuery from '@/hooks/usePosts';
+import {createClientComponentClient} from '@supabase/auth-helpers-nextjs';
+import Theme_Layout from '@/components/Theme_Layout';
+
 
 export default function Blog() {
-  const [blog_items, setBloogItems] = useState([{title: 'test'}]);
+  const {posts, getPosts} = usePostsQuery();
+
   useMemo(() => {
     ReactGA.initialize(process.env.GA_TRACKING_ID || '');
     // Send pageview with a custom path
@@ -24,12 +21,13 @@ export default function Blog() {
       page: '/blog',
       title: 'Moikas | Blog',
     });
+    getPosts();
   }, [process.env.GA_TRACKING_ID]);
 
   return (
-    <Main>
-      <Navbar />
-      <Blog_Feed items={blog_items} isCard={true} />
-    </Main>
+    <Theme_Layout>
+      <br/>
+      <Blog_Feed items={posts} isCard={true} />
+    </Theme_Layout>
   );
 }

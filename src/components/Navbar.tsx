@@ -26,8 +26,21 @@ const _Navbar = styled.div`
   felx-direction: row;
   justify-content: space-between;
   flex-shrink: 0;
-  @media (min-width: 768px) {
-    padding-right: 40px;
+  & > nav {
+    max-width: 504px;
+    justify-content: flex-end;
+  }
+  @media (max-width: 1023px) {
+    & > nav {
+      max-width: 400px;
+      justify-content: flex-end;
+    }
+  }
+  @media (max-width: 767px) {
+    & > nav {
+      max-width: 250px;
+      justify-content: flex-end;
+    }
   }
 `;
 
@@ -68,7 +81,7 @@ const components: {title: string; href: string; description: string}[] = [
       'A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.',
   },
 ];
-const Navbar = () => {
+const Navbar = ({session}: any) => {
   ReactGA.initialize(process.env.GA_TRACKING_ID || '');
 
   return (
@@ -78,26 +91,37 @@ const Navbar = () => {
       </Link>
 
       <NavigationMenu>
-        <NavigationMenuItem
-          onClick={() => {
-            // Send a custom event
-
-            ReactGA.event({
-              category: 'navigation',
-              action: 'clicked',
-              label: 'login',
-            });
-          }}
-          asChild>
-          <Link
-            target='_self'
-            href='/login'
-            passHref>
-            <NavigationMenuLink className={''}>
-              Login
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+        {session && !session.user ? (
+          <NavigationMenuItem
+            onClick={() => {
+              // Send a custom event
+              ReactGA.event({
+                category: 'navigation',
+                action: 'clicked',
+                label: 'login',
+              });
+            }}
+            asChild>
+            <Link target='_self' href='/login' passHref>
+              <NavigationMenuLink className={''}>Login</NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        ) : (
+          <NavigationMenuItem
+            onClick={() => {
+              // Send a custom event
+              ReactGA.event({
+                category: 'navigation',
+                action: 'clicked',
+                label: 'dashboard',
+              });
+            }}
+            asChild>
+            <Link target='_self' href='/dashboard' passHref>
+              <NavigationMenuLink className={''}>Dashboard</NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        )}
         <NavigationMenuList>
           <NavigationMenuItem className='NavigationMenuContent'>
             <NavigationMenuTrigger className='NavigationMenuContent'>
@@ -156,10 +180,7 @@ const Navbar = () => {
                     });
                   }}
                   asChild>
-                  <Link
-                    target='_blank'
-                    href='https://moikapylookout.gumroad.com/'
-                    passHref>
+                  <Link target='_blank' href='/digital' passHref>
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}>
                       Digital Products

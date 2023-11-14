@@ -1,10 +1,17 @@
 import _Home from '@/views/Home';
+
+import {createServerComponentClient} from '@supabase/auth-helpers-nextjs';
+import {cookies} from 'next/headers';
 export default async function Home() {
   const {
     props: {isLive},
   } = await getData();
+  const supabase = createServerComponentClient<any>({cookies});
+  const {
+    data: {session},
+  } = await supabase.auth.getSession();
 
-  return <_Home isLive={(await isLive) || false} />;
+  return <_Home session={session} isLive={(await isLive) || false} />;
 }
 export const getData = async () => {
   const checkStreamStatus = async () => {

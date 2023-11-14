@@ -1,6 +1,5 @@
 import Login from '@/views/Login';
-import {createServerComponentClient} from '@supabase/auth-helpers-nextjs';
-import {supabase} from '@supabase/auth-ui-shared';
+import {createServerComponentClient} from '@supabase/auth-helpers-nextjs'
 import {cookies} from 'next/headers';
 
 export default async function Page() {

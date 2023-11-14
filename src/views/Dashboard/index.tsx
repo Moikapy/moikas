@@ -1,17 +1,16 @@
 'use client';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import styled from 'styled-components';
 import Navbar from '@/components/Navbar';
 import TextEditor from '@/components/TextEditor';
+import usePosts from '@/hooks/usePosts';
+import Blog_Feed from '@/components/Blog_Feed';
+import Post_Form from '@/components/ui/Post_Form';
+import AccountForm from '@/components/AccountForm';
+import useProfileMutate from '@/hooks/useProfileMutate';
+import Theme_Layout from '@/components/Theme_Layout';
 
-const Main = styled.main`
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: start;
-`;
+
 const Dashboard_Wrapper = styled.div`
   display: flex;
   padding: 1rem;
@@ -27,7 +26,6 @@ const Dashboard_Sidenav = styled.div`
   align-items: start;
   justify-content: start;
   width: 100px;
-  margin-top:0.5rem;
 `;
 const Dashboard_Div = styled.div<{$align?: string}>`
   display: flex;
@@ -64,99 +62,120 @@ const Dashboard_Button = styled.button`
   max-width: 600px;
   text-align: center;
 `;
-export default function Dashboard_View() {
+export default function Dashboard_View({session}: any) {
   const [showPostView, setShowPost] = useState(false);
+  const [showEditView, setShowEdit] = useState(false);
+  const [showFeedManager, setShowFeedManager] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [postFormState, setPostFormState] = useState({
+    id: '',
+    title: '',
+    sub_title: '',
+    content: [],
+  });
+  const {posts, getPosts, createPost, updatePost, deletePost} =
+    usePosts(session);
+  const {updateProfile}: any = useProfileMutate();
+  useEffect(() => {
+    getPosts();
+  }, []);
+  function clearForm() {
+    setPostFormState({
+      id: '',
+      title: '',
+      sub_title: '',
+      content: [],
+    });
+  }
   return (
-    <Main>
-      <Navbar />
-      {/* <Dashboard_Div>Dashboard </Dashboard_Div>
-      <Dashboard_Div>Manage your posts and profile</Dashboard_Div>
-      <hr /> */}
+    <Theme_Layout>
       <Dashboard_Wrapper>
         <Dashboard_Sidenav>
-          <Dashboard_Button onClick={() => setShowPost(!showPostView)}>
+          <Dashboard_Button
+            onClick={() => {
+              clearForm();
+              setShowFeedManager(false);
+              setShowEdit(false);
+              setShowSettings(false);
+              setShowPost(!showPostView);
+            }}>
             New
           </Dashboard_Button>
-          <Dashboard_Button onClick={() => setShowPost(false)}>
-            Profile
+          <Dashboard_Button
+            onClick={() => {
+              setShowPost(false);
+              setShowEdit(false);
+              setShowSettings(false);
+              setShowFeedManager(!showFeedManager);
+            }}>
+            Posts
+          </Dashboard_Button>
+          <Dashboard_Button
+            onClick={() => {
+              setShowPost(false);
+              setShowFeedManager(false);
+              setShowEdit(false);
+              setShowSettings(!showSettings);
+            }}>
+            Settings
           </Dashboard_Button>
         </Dashboard_Sidenav>
         <Dashboard_Div $align='center'>
+          {showFeedManager && (
+            <Blog_Feed
+              items={posts}
+              isCard
+              onClick={(e: any) => {
+                setShowEdit(true);
+                setShowFeedManager(false);
+                setPostFormState(e);
+              }}
+              isEdit
+            />
+          )}
           {showPostView && (
-            <>
-              {/* <Dashboard_Div>New Post</Dashboard_Div> */}
-              <New_Post_Form />
-
-              <Dashboard_Button_Group>
-                <Dashboard_Button onClick={() => setShowPost(false)}>
-                  Back
-                </Dashboard_Button>
-                <Dashboard_Button onClick={() => setShowPost(false)}>
-                  Publish
-                </Dashboard_Button>
-              </Dashboard_Button_Group>
-            </>
+            <Post_Form
+              initState={postFormState}
+              onBack={() => {
+                setShowPost(false);
+                clearForm();
+              }}
+              updateFormState={(e: any) => setPostFormState(e)}
+              onPublish={() => {
+                createPost(postFormState);
+                setShowPost(false);
+                clearForm();
+              }}
+            />
+          )}
+          {showEditView && (
+            <Post_Form
+              initState={postFormState}
+              onBack={() => {
+                setShowEdit(false);
+                clearForm();
+              }}
+              updateFormState={(e: any) => setPostFormState(e)}
+              onPublish={() => {
+                updatePost(postFormState);
+                clearForm();
+                setShowEdit(false);
+              }}
+              onDelete={() => {
+                deletePost(postFormState.id);
+                clearForm();
+                setShowEdit(false);
+              }}
+              isEdit
+            />
+          )}
+          {showSettings && (
+            <AccountForm session={session} updateProfile={updateProfile} />
           )}
         </Dashboard_Div>
       </Dashboard_Wrapper>
-    </Main>
+    </Theme_Layout>
   );
 }
 
-const New_Post = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: start;
-  width: 100%;
-  height: 100%;
-  max-width: 1200px;
-  min-height: 775px;
-  padding: 1rem 0;
-  border: 1px solid #000;
-  border-radius: 5px;
-  background: #fff;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-`;
-const New_Post_Title_Section = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 1rem;
-  border-bottom: 1px solid #000;
-`;
 
-const New_Post_Title = styled.input`
-  border: 1px solid #000;
-  margin: 0.5rem 0;
-  border-radius: 5px;
-  padding: 0.5rem;
-`;
-
-const New_Post_Content = styled.div`
-  height: 100%;
-  width: 100%;
-  margin-top: 1rem;
-`;
-
-const New_Post_Label = styled.label``;
-
-function New_Post_Form() {
-  const [title, setTitle] = useState('');
-  const [subTitle, setSubTitle] = useState('');
-  const [content, setContent] = useState([]);
-  // console.log(content)
-  return (
-    <New_Post>
-      <New_Post_Title_Section>
-        <New_Post_Label>Title</New_Post_Label>
-        <New_Post_Title onChange={(e) => setTitle} />
-        <New_Post_Label>Sub Title</New_Post_Label>
-        <New_Post_Title onChange={(e) => setSubTitle} />
-      </New_Post_Title_Section>
-      <New_Post_Content>
-        <TextEditor onChange={(e:any) => {setContent(e);console.log(e)}} />
-      </New_Post_Content>
-    </New_Post>
-  );
-}

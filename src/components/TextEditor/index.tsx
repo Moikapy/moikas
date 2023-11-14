@@ -2,23 +2,23 @@
 import {Block, BlockNoteEditor} from '@blocknote/core';
 import {BlockNoteView, useBlockNote} from '@blocknote/react';
 import '@blocknote/core/style.css';
-import {useState} from 'react';
+import {useMemo} from 'react';
 
 // Our <Editor> component we can reuse later
-export default function Editor({onChange = () => {}}: any) {
+export default function Editor({initState=[],onChange = () => {}}: any) {
   // Gets the previously stored editor contents.
-  const initialContent: string | null = localStorage.getItem('editorContent');
+  // const initialContent: string | null = localStorage.getItem('editorContent');
   // Stores the editor's contents as an array of Block objects.
-  const [blocks, setBlocks] = useState<Block[] | null>(null);
+  // useMemo(() => {
+  //   if (initialContent) {
+  //     onChange(JSON.parse(initialContent));
+  //   }
+  // }, []);
   // Creates a new editor instance.
   const editor: BlockNoteEditor | null = useBlockNote({
-    initialContent: initialContent ? JSON.parse(initialContent) : undefined,
+    initialContent: initState,
     onEditorContentChange: (editor) => {
-      localStorage.setItem(
-        'editorContent',
-        JSON.stringify(editor.topLevelBlocks)
-      );
-      setBlocks(editor.topLevelBlocks);
+
       onChange(editor.topLevelBlocks);
     },
   });

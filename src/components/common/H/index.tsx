@@ -1,3 +1,4 @@
+'use client';
 import React, {useState, useEffect, useMemo, ReactNode} from 'react';
 import styled from 'styled-components';
 const H1 = styled.h1`

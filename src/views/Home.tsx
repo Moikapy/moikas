@@ -48,7 +48,7 @@ width: 100%;
   }
 `;
 
-export default function Home({isLive = false}: {isLive: boolean;}) {
+export default function Home({isLive = false, session}: {isLive: boolean; session: any}) {
   const [showHeader, setShowHeader] = useState(true);
 
   const [showRSSFeed, setShowRSSFeed] = useState(true);
@@ -66,34 +66,33 @@ export default function Home({isLive = false}: {isLive: boolean;}) {
   return (
     <Data_Provider>
       <Main>
-        <Navbar />
+        <Navbar session={session} />
         {loading && (
           <Container>
             {showHeader && <Header />}
 
             <TwitchStream
-            isLive={isLive}
-            onComplete={(e: boolean): void => {
-              setShowHeader(!e);
-            }}
-          />
+              isLive={isLive}
+              onComplete={(e: boolean): void => {
+                setShowHeader(!e);
+              }}
+            />
             <Iframe
-            src='https://embeds.beehiiv.com/da38b479-5278-4c4f-92da-65fd877960bf?slim=true'
-            data-test-id='beehiiv-embed'
-            ></Iframe>
+              src='https://embeds.beehiiv.com/da38b479-5278-4c4f-92da-65fd877960bf?slim=true'
+              data-test-id='beehiiv-embed'></Iframe>
             {/* Conditional rendering based on showRSSFeed state */}
             {showRSSFeed && (
-            <RSSFeed
-              isCard
-              title='Latest'
-              urls={[
-                'https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml',
-                'https://www.youtube.com/feeds/videos.xml?channel_id=UCIjgVUuzx_H0ZrUK-6J_QiQ',
-                'https://www.etsy.com/shop/moikaslookout/rss',
-              ]}
-              onComplete={() => setLoading(true)}
-            />
-          )}
+              <RSSFeed
+                isCard
+                title='Latest'
+                urls={[
+                  'https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml',
+                  'https://www.youtube.com/feeds/videos.xml?channel_id=UCIjgVUuzx_H0ZrUK-6J_QiQ',
+                  'https://www.etsy.com/shop/moikaslookout/rss',
+                ]}
+                onComplete={() => setLoading(true)}
+              />
+            )}
           </Container>
         )}
       </Main>

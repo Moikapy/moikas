@@ -21,7 +21,7 @@ export default function useProfileQuery(
         .select(`name, user_name`)
         .eq('user_id', user?.id)
         .single();
-      console.log(await data, await error, await status);
+
       if (error && status !== 406) {
         throw error;
       }

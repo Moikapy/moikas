@@ -19,19 +19,14 @@ const nextConfig = {
         source: '/digital',
         destination: 'https://moikapylookout.gumroad.com/',
         permanent: true,
-      },
-      {
-        source: '/blog',
-        destination: 'https://moikas.beehiiv.com/',
-        permanent: false,
-      },
+      }
 
     ];
   },
   async rewrites() {
     return [
       {
-        source: '/:path*',
+        source: '/404',
         destination: '/',
       },
     ];
