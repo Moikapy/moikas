@@ -65,12 +65,14 @@ export default function Post_Page_View({
 
 function Text_Block_Renderer({blocks}: any): any {
   // console.log(blocks.type)
-  return blocks.map((block: any) => {
+  const renderBlock = (block: any): any => {
     if (block.type === 'header')
       return <H type={block.data.level}>{block.data.text}</H>;
     if (block.type === 'paragraph') {
-      if (block?.content?.length === 0) {
+      if (block?.content?.length === 0 && block?.children?.length === 0) {
         return <br />;
+      } else if (block?.content?.length === 0 && block?.children?.length > 0) {
+        return block?.children.map(renderBlock);
       }
       return block?.content.map((content: any) => {
         if (content.type === 'text') return <p>{content?.text}</p>;
@@ -78,5 +80,6 @@ function Text_Block_Renderer({blocks}: any): any {
           return <a href={content?.link}>{content?.link}</a>;
       });
     }
-  });
+  };
+  return blocks.map(renderBlock);
 }
