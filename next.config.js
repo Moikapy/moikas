@@ -19,6 +19,11 @@ const nextConfig = {
         source: '/digital',
         destination: 'https://moikapylookout.gumroad.com/',
         permanent: true,
+      },
+      {
+        source: '/blog',
+        destination: 'https://moikas.beehiiv.com/',
+        permanent: false,
       }
 
     ];
