@@ -64,7 +64,6 @@ export default function Post_Page_View({
 }
 
 function Text_Block_Renderer({blocks}: any): any {
-  // console.log(blocks.type)
   const renderBlock = (block: any): any => {
     if (block.type === 'header')
       return <H type={block.data.level}>{block.data.text}</H>;

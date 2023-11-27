@@ -12,7 +12,7 @@ const RSSFeed = dynamic(() => import('@/components/rss_feed'), {ssr: true});
 
 import Data_Provider, {Data_Context} from '@/components/Data_Provider';
 
-import {sizes, devices} from '@/styles/index';
+import {devices} from '@/styles/index';
 const Main = styled.main`
   /* Add your main styles here if any */
   height: 100vh;
@@ -84,7 +84,7 @@ export default function Home({isLive = false, session}: {isLive: boolean; sessio
             {showRSSFeed && (
               <RSSFeed
                 isCard
-                title='Latest'
+                title='RSS'
                 urls={[
                   'https://rss.beehiiv.com/feeds/lZKp0ZrfNi.xml',
                   'https://www.youtube.com/feeds/videos.xml?channel_id=UCIjgVUuzx_H0ZrUK-6J_QiQ',

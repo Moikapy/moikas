@@ -91,14 +91,14 @@ export default function Header() {
         <Link target='_self' href={'/blog'}>
           <Button>Blog</Button>
         </Link>
-        <Link target='_self' href={'/digital'}>
-          <Button>Digital</Button>
-        </Link>
         <Button>
           <Link target='_self' href={'/shop'}>
             Shop
           </Link>
         </Button>
+        <Link target='_self' href={'/digital'}>
+          <Button>Digital</Button>
+        </Link>
       </Button_Group>
     </_Header>
   );
